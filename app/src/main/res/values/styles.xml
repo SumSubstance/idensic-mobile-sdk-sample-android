@@ -1,0 +1,62 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blueDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="materialButtonStyle">@style/Widget.Button</item>
+        <item name="toolbarStyle">@style/Widget.Toolbar</item>
+        <item name="textInputStyle">@style/Widget.TextInputLayout</item>
+    </style>
+
+    <style name="Widget"/>
+
+    <style name="Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/blue</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="title">@string/app_name</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <style name="Widget.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColor">@color/black</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.TextInputLayout</item>
+        <item name="boxBackgroundColor">#F6F6F6</item>
+        <item name="errorTextAppearance">@style/TextAppearance.TextInputLayout.Error</item>
+        <item name="hintTextAppearance">@style/TextAppearance.TextInputLayout.Hint</item>
+    </style>
+
+    <style name="Widget.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.TextInputLayout.Error" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.TextInputLayout.Hint" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="Widget.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:minHeight">60dp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/sns_white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="backgroundTint">@color/blue</item>
+    </style>
+
+    <style name="ShapeAppearance"/>
+
+    <style name="ShapeAppearance.TextInputLayout" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+</resources>
