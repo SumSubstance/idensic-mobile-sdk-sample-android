@@ -16,7 +16,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_URL", "\"https://test-api.sumsub.com\"")
+        buildConfigField("String", "API_URL", "\"https://test-api.sumsub.com/\"")
     }
 
     buildTypes {
@@ -56,6 +56,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.10.1"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.10.1"
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.10.2"
+    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.10.2"
 }

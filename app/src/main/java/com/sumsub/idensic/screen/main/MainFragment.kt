@@ -151,11 +151,9 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
                 Timber.d("The SDK state was changed: $prevState -> $newState")
 
                 when (newState) {
-                    is SNSSDKState.NotReady -> Timber.d("SDK is not ready. Probably you don't start the SDK yet")
                     is SNSSDKState.Ready -> Timber.d("SDK is ready")
                     is SNSSDKState.Failed -> {
                         when (newState) {
-                            is SNSSDKState.Failed.InitialLoading -> Timber.e(newState.exception,"Initial loading error")
                             is SNSSDKState.Failed.Unauthorized -> Timber.e(newState.exception,"Invalid token or a token can't be refreshed by the SDK. Please, check your token expiration handler")
                             is SNSSDKState.Failed.Unknown -> Timber.e(newState.exception, "Unknown error")
                         }
@@ -168,8 +166,6 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
                     is SNSSDKState.Approved -> Timber.d("Applicant has been approved")
                 }
             }
-
-            val onSDKReadyHandler: () -> Unit = { Timber.d("The SDK is ready") }
 
             val onSDKCompletedHandler: (SNSCompletionResult, SNSSDKState) -> Unit = { result, state ->
                 Timber.d("The SDK is finished. Result: $result, State: $state")
@@ -197,7 +193,6 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
                 .withDebug(true)
                 .withModules(modules)
                 .withHandlers(
-                    onReady = onSDKReadyHandler,
                     onStateChanged = onSDKStateChangedHandler,
                     onCompleted = onSDKCompletedHandler,
                     onError = onSDKErrorHandler)
