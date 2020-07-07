@@ -18,11 +18,11 @@ import com.sumsub.idensic.manager.ApiManager
 import com.sumsub.idensic.manager.PrefManager
 import com.sumsub.idensic.screen.base.BaseFragment
 import com.sumsub.sns.core.SNSMobileSDK
+import com.sumsub.sns.core.SNSModule
 import com.sumsub.sns.core.data.listener.TokenExpirationHandler
 import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSSDKState
-import com.sumsub.sns.liveness3d.SNSLiveness3d
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -36,6 +36,8 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
     private lateinit var etApplicant: TextInputEditText
     private lateinit var tlAccessToken: TextInputLayout
     private lateinit var etAccessToken: TextInputEditText
+    private lateinit var tlFlowName: TextInputLayout
+    private lateinit var etFlowName: TextInputEditText
     private lateinit var btnApplicant: MaterialButton
     private lateinit var btnStart: MaterialButton
 
@@ -69,6 +71,8 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
         etApplicant = view.findViewById(R.id.et_applicant)
         tlAccessToken = view.findViewById(R.id.tl_access_token)
         etAccessToken = view.findViewById(R.id.et_access_token)
+        tlFlowName = view.findViewById(R.id.tl_flow_name)
+        etFlowName = view.findViewById(R.id.et_flow_name)
         btnApplicant = view.findViewById(R.id.btn_generate_applicant)
         btnStart = view.findViewById(R.id.btn_start)
 
@@ -145,7 +149,8 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
             setAccessToken(accessToken)
 
             val apiUrl = BuildConfig.API_URL // test-api.sumsub.com
-            val modules = listOf(SNSLiveness3d())
+            val modules = emptyList<SNSModule>()
+            val flowName = etFlowName.text.toString()
 
             val onSDKStateChangedHandler: (SNSSDKState, SNSSDKState) -> Unit = { newState, prevState ->
                 Timber.d("The SDK state was changed: $prevState -> $newState")
@@ -188,7 +193,7 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
                 }
             }
 
-            val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl)
+            val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, flowName)
                 .withAccessToken(token, onTokenExpiration = sdkExpirationHandler)
                 .withDebug(true)
                 .withModules(modules)
