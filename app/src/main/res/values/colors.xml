@@ -6,4 +6,6 @@
     <color name="black">@android:color/black</color>
     <color name="blue">#027aff</color>
     <color name="blueDark">#026CE3</color>
+
+    <color name="ic_launcher_background">#191919</color>
 </resources>

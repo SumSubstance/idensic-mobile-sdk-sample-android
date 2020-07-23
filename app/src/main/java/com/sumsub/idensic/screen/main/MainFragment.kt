@@ -26,6 +26,7 @@ import com.sumsub.sns.core.data.model.SNSSDKState
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import java.util.*
 
 class MainFragment: BaseFragment(R.layout.fragment_main) {
 
@@ -102,7 +103,8 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
         uiScope.launch {
             try {
                 val token = PrefManager.getToken()
-                val userId = PrefManager.getUserId()
+                val userId = String.format(Constants.USER_ID, UUID.randomUUID().toString())
+                PrefManager.setUserId(userId)
                 val applicantId = ApiManager.getApplicantId(token, listOf(Constants.identity, Constants.selfie, Constants.proofOfResidence), userId)
                 setApplicantId(applicantId)
                 Toast.makeText(context, "New Applicant has been created", Toast.LENGTH_SHORT).show()
