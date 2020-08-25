@@ -23,6 +23,7 @@ import com.sumsub.sns.core.data.listener.TokenExpirationHandler
 import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSSDKState
+import com.sumsub.sns.liveness3d.SNSLiveness3d
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -151,7 +152,7 @@ class MainFragment: BaseFragment(R.layout.fragment_main) {
             setAccessToken(accessToken)
 
             val apiUrl = BuildConfig.API_URL // test-api.sumsub.com
-            val modules = emptyList<SNSModule>()
+            val modules = listOf(SNSLiveness3d())
             val flowName = etFlowName.text.toString()
 
             val onSDKStateChangedHandler: (SNSSDKState, SNSSDKState) -> Unit = { newState, prevState ->
