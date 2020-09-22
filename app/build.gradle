@@ -51,6 +51,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.12.2"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.12.2"
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.12.3"
+    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.12.3"
 }
