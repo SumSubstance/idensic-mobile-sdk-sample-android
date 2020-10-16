@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.sumsub.idensic.common.getSoftInputMode
 import com.sumsub.idensic.common.setSoftInputMode
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
 abstract class BaseFragment(@LayoutRes resId: Int): Fragment(resId) {
 

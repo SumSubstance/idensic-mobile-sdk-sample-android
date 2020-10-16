@@ -43,13 +43,4 @@ object ApiManager {
 
     suspend fun getAccessTokenForAction(token: String?, userId: String, actionId: String?): AccessTokenResponse = service.getAccessToken("Bearer $token", userId, actionId)
 
-    suspend fun getApplicantId(token: String?, docs: List<DocSet>, userId: String?): String {
-        val request = ApplicantRequest(
-            info = InfoAttribute(),
-            requiredIdDocs = DocSets(docs),
-            externalUserId = userId
-        )
-
-        return service.getApplicantId("Bearer $token", request).id
-    }
 }

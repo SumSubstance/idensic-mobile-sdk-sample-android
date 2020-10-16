@@ -21,7 +21,6 @@ object PrefManager {
     fun getUsername(): String? = preferences.getString(KEY_USER_USERNAME, null)
 
     fun setPassword(password: String?) = preferences.edit(commit = true) { putString(KEY_USER_PASSWORD, password) }
-    fun getPassword() = preferences.getString(KEY_USER_PASSWORD, null)
 
     fun setToken(token: String?) = preferences.edit(commit = true) { putString(KEY_TOKEN, token) }
     fun getToken() = preferences.getString(KEY_TOKEN, null)

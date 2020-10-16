@@ -115,6 +115,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         showProgress(false)
         setAccessToken(PrefManager.getAccessToken())
+        setAccessTokenAction(PrefManager.getAccessTokenAction())
         etUserId.setText(PrefManager.getUserId())
         etActionId.setText(PrefManager.getUserId())
 

@@ -36,7 +36,6 @@
 
     <style name="TextAppearance.TextInputLayout.Error" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">12sp</item>
-        <item name="android:letterSpacing">0</item>
     </style>
 
     <style name="TextAppearance.TextInputLayout.Hint" parent="TextAppearance.MaterialComponents.Caption">
