@@ -39,7 +39,9 @@ object ApiManager {
 
     suspend fun login(username: String, password: String): PayloadResponse = service.login(Credentials.basic(username, password))
 
-    suspend fun getAccessToken(token: String?, applicantId: String?, userId: String?): AccessTokenResponse = service.getAccessToken("Bearer $token", applicantId, userId)
+    suspend fun getAccessTokenForFlow(token: String?, userId: String): AccessTokenResponse = service.getAccessToken("Bearer $token", userId, null)
+
+    suspend fun getAccessTokenForAction(token: String?, userId: String, actionId: String?): AccessTokenResponse = service.getAccessToken("Bearer $token", userId, actionId)
 
     suspend fun getApplicantId(token: String?, docs: List<DocSet>, userId: String?): String {
         val request = ApplicantRequest(

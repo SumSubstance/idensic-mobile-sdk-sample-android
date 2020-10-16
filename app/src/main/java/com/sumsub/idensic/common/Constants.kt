@@ -10,6 +10,7 @@ data class Endpoint(val name: String, val uri: String)
 object Constants {
 
     const val USER_ID = "msdk2-demo-android-%s"
+    const val ACTION_ID = "msdk2-demo-android-action-%s"
 
     val endpoints = listOf(
         Endpoint("TEST", "https://test-api.sumsub.com/"),

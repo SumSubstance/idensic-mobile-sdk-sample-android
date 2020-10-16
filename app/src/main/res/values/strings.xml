@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">Idensic Demo</string>
-    <string name="start_sdk">Start SDK</string>
-    <string name="generate_new_applicant">Generate New Applicant</string>
-    <string name="applicant_id">Applicant Id</string>
+    <string name="start_flow">Start Flow</string>
+    <string name="start_action">Start Action</string>
+    <string name="generate_new_userid">Generate New External User ID</string>
+    <string name="generate_new_actionid">Generate New External Action ID</string>
+    <string name="user_id">External User ID</string>
+    <string name="action_id">External Action ID</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="username">Username</string>
     <string name="access_token">Access Token</string>
     <string name="logout">Logout</string>
     <string name="flow_name">Flow Name</string>
+    <string name="action_name">Action Name</string>
     <string name="default_flow">msdk-basic-kyc</string>
+    <string name="default_action">action_liveness_check</string>
 </resources>

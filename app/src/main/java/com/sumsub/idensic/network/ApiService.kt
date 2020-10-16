@@ -15,7 +15,7 @@ interface ApiService {
     suspend fun login(@Header("Authorization") authorization: String, @Query("ttlInSecs") ttlInSecs: Int = 999999): PayloadResponse
 
     @POST("resources/accessTokens")
-    suspend fun getAccessToken(@Header("Authorization") authorization: String, @Query("applicantId") applicantId: String?, @Query("userId") userId: String?, @Query("ttlInSecs") ttlInSecs: Int = 999999): AccessTokenResponse
+    suspend fun getAccessToken(@Header("Authorization") authorization: String, @Query("userId") userId: String, @Query("externalActionId") externalActionId: String? = null, @Query("ttlInSecs") ttlInSecs: Int = 999999): AccessTokenResponse
 
     @POST("resources/applicants")
     suspend fun getApplicantId(@Header("Authorization") authorization: String, @Body body: ApplicantRequest): ApplicantResponse

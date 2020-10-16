@@ -38,7 +38,7 @@
                 android:id="@+id/g_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tl_access_token,tl_applicant,tl_flow_name,btn_generate_applicant,btn_start"/>
+                app:constraint_referenced_ids="tl_access_token,tl_userid,tl_flow_name,btn_generate_userid,btn_start_flow,tl_actionid,tl_action_name,tl_access_token_action,btn_generate_action_id,btn_start_action"/>
 
             <ProgressBar
                 android:id="@+id/pb_progress"
@@ -50,20 +50,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_applicant"
+                android:id="@+id/tl_userid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/applicant_id"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintVertical_bias="0.2"
+                android:hint="@string/user_id"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintBottom_toTopOf="@+id/tl_access_token"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_applicant"
+                    android:id="@+id/et_userid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -76,12 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:hint="@string/access_token"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintBottom_toTopOf="@+id/tl_flow_name"
-                app:layout_constraintTop_toBottomOf="@+id/tl_applicant">
+                app:layout_constraintTop_toBottomOf="@+id/tl_userid">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_access_token"
@@ -101,8 +95,7 @@
                 app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintBottom_toTopOf="@+id/btn_generate_applicant"
-                app:layout_constraintTop_toBottomOf="@+id/tl_access_token">
+                app:layout_constraintTop_toBottomOf="@id/tl_access_token">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_flow_name"
@@ -114,26 +107,101 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_generate_applicant"
+                android:id="@+id/btn_generate_userid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
-                android:text="@string/generate_new_applicant"
+                android:layout_marginTop="16dp"
+                android:text="@string/generate_new_userid"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toBottomOf="@+id/tl_flow_name"
-                app:layout_constraintBottom_toTopOf="@+id/btn_start"/>
+                app:layout_constraintTop_toBottomOf="@+id/tl_flow_name"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_start"
+                android:id="@+id/btn_start_flow"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/start_sdk"
+                android:text="@string/start_flow"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
+                app:layout_constraintRight_toRightOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@+id/btn_generate_userid"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_actionid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:hint="@string/action_id"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
+                app:layout_constraintRight_toRightOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@id/btn_start_flow">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_actionid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_access_token_action"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/access_token"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
+                app:layout_constraintRight_toRightOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@+id/tl_actionid">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_access_token_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_action_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/action_name"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
+                app:layout_constraintRight_toRightOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@+id/tl_access_token_action">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_action_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="@string/default_action"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_generate_action_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/generate_new_actionid"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
+                app:layout_constraintRight_toRightOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@+id/tl_action_name"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_start_action"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/start_action"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_generate_applicant"/>
+                app:layout_constraintTop_toBottomOf="@+id/btn_generate_action_id"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>
