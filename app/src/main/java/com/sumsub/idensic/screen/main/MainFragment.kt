@@ -262,7 +262,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 when (newState) {
                     is SNSSDKState.Failed.Unauthorized -> Timber.e(newState.exception, "Invalid token or a token can't be refreshed by the SDK. Please, check your token expiration handler")
                     is SNSSDKState.Failed.Unknown -> Timber.e(newState.exception, "Unknown error")
-                    is SNSSDKState.Failed.ActionNotFound -> Timber.e(newState.exception, "Action not found")
                 }
             }
             is SNSSDKState.Initial -> Timber.d("No verification steps are passed yet")
