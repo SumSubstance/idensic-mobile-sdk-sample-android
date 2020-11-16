@@ -1,5 +1,6 @@
 package com.sumsub.idensic.screen.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -180,9 +181,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val onSDKStateChangedHandler = getOnStateChangeListener()
 
-            val onSDKCompletedHandler = getOnSDKCompletedHandler()
+            val onSDKCompletedHandler = getOnSDKCompletedHandler(requireContext().applicationContext)
 
-            val onSDKErrorHandler = getOnSDKErrorHandler()
+            val onSDKErrorHandler = getOnSDKErrorHandler(requireContext().applicationContext)
 
             val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, flowName)
                     .withAccessToken(accessToken, onTokenExpiration = sdkFlowAccessTokenExpirationHandler)
@@ -234,9 +235,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val onSDKStateChangedHandler = getOnStateChangeListener()
 
-            val onSDKCompletedHandler = getOnSDKCompletedHandler()
+            val onSDKCompletedHandler = getOnSDKCompletedHandler(requireContext().applicationContext)
 
-            val onSDKErrorHandler = getOnSDKErrorHandler()
+            val onSDKErrorHandler = getOnSDKErrorHandler(requireContext().applicationContext)
 
             val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, actionName)
                     .withAccessToken(accessToken, onTokenExpiration = sdkActionAccessTokenExpirationHandler)
@@ -274,9 +275,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getOnSDKCompletedHandler(): (SNSCompletionResult, SNSSDKState) -> Unit = { result, state ->
+    private fun getOnSDKCompletedHandler(context: Context): (SNSCompletionResult, SNSSDKState) -> Unit = { result, state ->
         Timber.d("The SDK is finished. Result: $result, State: $state")
-        Toast.makeText(requireContext(), "The SDK is finished. Result: $result, State: $state", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "The SDK is finished. Result: $result, State: $state", Toast.LENGTH_SHORT).show()
 
         when (result) {
             is SNSCompletionResult.SuccessTermination -> Timber.d(result.toString())
@@ -284,9 +285,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getOnSDKErrorHandler(): (SNSException) -> Unit = { exception ->
+    private fun getOnSDKErrorHandler(context: Context): (SNSException) -> Unit = { exception ->
         Timber.d("The SDK throws an exception. Exception: $exception")
-        Toast.makeText(requireContext(), "The SDK throws an exception. Exception: $exception", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "The SDK throws an exception. Exception: $exception", Toast.LENGTH_SHORT).show()
 
         when (exception) {
             is SNSException.Api -> Timber.d("Api exception. ${exception.description}")
