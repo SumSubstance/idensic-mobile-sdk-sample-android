@@ -18,6 +18,7 @@ import com.sumsub.idensic.common.Constants
 import com.sumsub.idensic.manager.ApiManager
 import com.sumsub.idensic.manager.PrefManager
 import com.sumsub.idensic.screen.base.BaseFragment
+import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
 import com.sumsub.sns.core.data.listener.TokenExpirationHandler
 import com.sumsub.sns.core.data.model.SNSCompletionResult
@@ -239,6 +240,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val onSDKErrorHandler = getOnSDKErrorHandler(requireContext().applicationContext)
 
+            val onActionResult = getOnActionResult()
+
             val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, actionName)
                     .withAccessToken(accessToken, onTokenExpiration = sdkActionAccessTokenExpirationHandler)
                     .withDebug(true)
@@ -246,7 +249,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                     .withHandlers(
                         onStateChanged = onSDKStateChangedHandler,
                         onCompleted = onSDKCompletedHandler,
-                        onError = onSDKErrorHandler)
+                        onError = onSDKErrorHandler,
+                        onActionResult = onActionResult
+                    )
                     .build()
 
             snsSdk.launch()
@@ -294,6 +299,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             is SNSException.Network -> Timber.d(exception, "Network exception.")
             is SNSException.Unknown -> Timber.d(exception, "Unknown exception.")
         }
+    }
+
+    private fun getOnActionResult(): (String, String?) -> SNSActionResult = { actionId, answer ->
+        Timber.d("Action Result: actionId: $actionId answer: $answer")
+        // use default scenario
+        SNSActionResult.Continue
     }
 
     private fun showProgress(show: Boolean) {
