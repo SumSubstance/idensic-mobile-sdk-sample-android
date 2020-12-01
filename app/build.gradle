@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
@@ -22,7 +21,8 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,6 +52,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.13.5"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.13.5"
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.14.0"
+    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.14.0"
 }

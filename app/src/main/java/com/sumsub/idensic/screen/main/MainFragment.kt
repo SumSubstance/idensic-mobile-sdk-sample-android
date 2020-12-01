@@ -177,7 +177,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             setAccessToken(accessToken)
 
             val apiUrl = BuildConfig.API_URL // test-api.sumsub.com
-            val modules = listOf(SNSLiveness3d(), SNSProoface())
+
+            // force SDK to show open settings dialog request
+            val modules = listOf(SNSProoface(feature = SNSProoface.FEATURE_FACE_SHOW_SETTINGS))
+
             val flowName = etFlowName.text.toString()
 
             val onSDKStateChangedHandler = getOnStateChangeListener()
