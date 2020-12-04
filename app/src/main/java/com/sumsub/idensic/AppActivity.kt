@@ -19,7 +19,7 @@ class AppActivity : AppCompatActivity(), ProviderInstaller.ProviderInstallListen
         Timber.d("onProviderInstalled")
     }
 
-    override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent) {
+    override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent?) {
         Timber.d("onProviderInstallFailed: errorCode=$errorCode")
     }
 }
