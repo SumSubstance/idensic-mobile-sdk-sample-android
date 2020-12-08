@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.3.1"
+    def nav_version = "2.3.2"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -52,6 +52,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.14.1"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.14.1"
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.14.2"
+    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.14.2"
 }
