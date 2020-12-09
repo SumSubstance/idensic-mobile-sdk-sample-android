@@ -1,11 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryDark">@color/blueDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/sns_blue</item>
+        <item name="colorPrimaryVariant">@color/sns_blue_2</item>
+        <item name="colorAccent">@color/sns_orange</item>
+
+        <item name="colorSecondary">@color/sns_green</item>
+
+        <item name="android:colorBackground">@color/sns_white</item>
+        <item name="colorSurface">@color/sns_white</item>
+        <item name="colorError">@color/sns_red</item>
+
+        <item name="colorOnPrimary">@color/sns_white</item>
+        <item name="colorOnSecondary">@color/sns_black</item>
+        <item name="colorOnBackground">@color/sns_black</item>
+        <item name="colorOnSurface">@color/sns_black</item>
+        <item name="colorOnError">@color/sns_black</item>
 
         <item name="materialButtonStyle">@style/Widget.Button</item>
         <item name="toolbarStyle">@style/Widget.Toolbar</item>

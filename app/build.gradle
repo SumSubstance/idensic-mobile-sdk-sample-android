@@ -9,8 +9,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 11402
+        versionName "1.14.2"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
