@@ -5,7 +5,6 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.sumsub.idensic.R
 import com.sumsub.idensic.common.Constants
-import com.sumsub.idensic.manager.PrefManager
 import com.sumsub.idensic.screen.base.BaseFragment
 import java.util.*
 
@@ -14,14 +13,14 @@ class SplashFragment: BaseFragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var userId = PrefManager.getUserId()
+        var userId = prefManager.getUserId()
         if (userId.isNullOrEmpty()) {
             userId = String.format(Constants.USER_ID, UUID.randomUUID().toString())
-            PrefManager.setUserId(userId)
+            prefManager.setUserId(userId)
         }
 
-        handler.postDelayed({
-            val loggedIn = !PrefManager.getUsername().isNullOrBlank()
+        view.postDelayed({
+            val loggedIn = !prefManager.getUsername().isNullOrBlank()
             val actionId = if (loggedIn) {
                 R.id.action_splash_to_main
             } else {

@@ -12,8 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiManager {
 
-    private val service: ApiService by lazy { retrofit.create(
-        ApiService::class.java) }
+    private val service: ApiService by lazy { retrofit.create(ApiService::class.java) }
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
@@ -42,5 +41,7 @@ object ApiManager {
     suspend fun getAccessTokenForFlow(token: String?, userId: String): AccessTokenResponse = service.getAccessToken("Bearer $token", userId, null)
 
     suspend fun getAccessTokenForAction(token: String?, userId: String, actionId: String?): AccessTokenResponse = service.getAccessToken("Bearer $token", userId, actionId)
+
+    suspend fun getFlows(authorizationToken: String) = service.getFlows("Bearer $authorizationToken")
 
 }

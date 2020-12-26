@@ -1,17 +1,15 @@
 package com.sumsub.idensic
 
-import android.content.Context
 import androidx.multidex.MultiDexApplication
+import com.sumsub.idensic.manager.PrefManager
 
 class App: MultiDexApplication() {
 
+    lateinit var prefManager: PrefManager
+
     override fun onCreate() {
         super.onCreate()
-        context = this
+        prefManager = PrefManager(this)
     }
 
-    companion object {
-
-        lateinit var context: Context
-    }
 }

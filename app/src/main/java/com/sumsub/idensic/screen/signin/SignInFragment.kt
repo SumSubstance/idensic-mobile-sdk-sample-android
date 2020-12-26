@@ -7,13 +7,13 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.sumsub.idensic.R
 import com.sumsub.idensic.manager.ApiManager
-import com.sumsub.idensic.manager.PrefManager
 import com.sumsub.idensic.screen.base.BaseFragment
 import kotlinx.coroutines.launch
 
@@ -65,12 +65,12 @@ class SignInFragment: BaseFragment(R.layout.fragment_sign_in) {
 
         showProgress(true)
 
-        uiScope.launch {
+        lifecycleScope.launch {
             try {
                 val response = ApiManager.login(username!!, password!!)
-                PrefManager.setUsername(username)
-                PrefManager.setPassword(password)
-                PrefManager.setToken(response.payload)
+                prefManager.setUsername(username)
+                prefManager.setPassword(password)
+                prefManager.setToken(response.payload)
 
                 findNavController().navigate(R.id.action_sign_in_to_main)
             } catch (exception: Exception) {

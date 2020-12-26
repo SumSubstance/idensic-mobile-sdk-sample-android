@@ -1,40 +1,25 @@
 package com.sumsub.idensic.screen.base
 
 import android.os.Bundle
-import android.os.Handler
-import android.view.View
 import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.sumsub.idensic.App
 import com.sumsub.idensic.common.getSoftInputMode
 import com.sumsub.idensic.common.setSoftInputMode
-import kotlinx.coroutines.*
+import com.sumsub.idensic.manager.PrefManager
 
 abstract class BaseFragment(@LayoutRes resId: Int): Fragment(resId) {
 
-    private lateinit var job: Job
-    protected lateinit var uiScope: CoroutineScope
-    protected lateinit var handler: Handler
     private var originalMode: Int? = null
+
+    protected val prefManager: PrefManager get() = (requireActivity().application as App).prefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         originalMode = activity?.window?.getSoftInputMode()
         setSoftInputMode(getSoftInputMode())
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        job = SupervisorJob()
-        uiScope = CoroutineScope(Dispatchers.Main.immediate + job)
-        handler = Handler()
-    }
-
-    override fun onDestroyView() {
-        uiScope.cancel()
-        handler.removeCallbacksAndMessages(null)
-        super.onDestroyView()
     }
 
     override fun onDestroy() {

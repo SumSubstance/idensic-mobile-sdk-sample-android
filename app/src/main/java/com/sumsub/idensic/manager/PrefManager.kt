@@ -5,17 +5,9 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.sumsub.idensic.App
 
-object PrefManager {
+class PrefManager(val context: Context) {
 
-    private const val KEY_USER_USERNAME = "user_username"
-    private const val KEY_USER_PASSWORD = "user_password"
-    private const val KEY_TOKEN = "token"
-    private const val KEY_ACCESS_TOKEN = "access_token"
-    private const val KEY_ACCESS_TOKEN_ACTION = "access_token_action"
-    private const val KEY_USER_ID = "user_id"
-    private const val KEY_ACTION_ID = "action_id"
-
-    private val preferences: SharedPreferences by lazy { App.context.getSharedPreferences("settings", Context.MODE_PRIVATE) }
+    private val preferences: SharedPreferences by lazy { context.getSharedPreferences("settings", Context.MODE_PRIVATE) }
 
     fun setUsername(username: String?) = preferences.edit(commit = true) { putString(KEY_USER_USERNAME, username) }
     fun getUsername(): String? = preferences.getString(KEY_USER_USERNAME, null)
@@ -36,4 +28,14 @@ object PrefManager {
 
     fun setAccessTokenAction(token: String?) = preferences.edit(commit = true) { putString(KEY_ACCESS_TOKEN_ACTION, token) }
     fun getAccessTokenAction() = preferences.getString(KEY_ACCESS_TOKEN_ACTION, null)
+
+    companion object {
+        private const val KEY_USER_USERNAME = "user_username"
+        private const val KEY_USER_PASSWORD = "user_password"
+        private const val KEY_TOKEN = "token"
+        private const val KEY_ACCESS_TOKEN = "access_token"
+        private const val KEY_ACCESS_TOKEN_ACTION = "access_token_action"
+        private const val KEY_USER_ID = "user_id"
+        private const val KEY_ACTION_ID = "action_id"
+    }
 }

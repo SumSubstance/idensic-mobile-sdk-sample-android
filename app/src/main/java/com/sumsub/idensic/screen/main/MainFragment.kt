@@ -4,23 +4,27 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.Group
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.sumsub.idensic.BuildConfig
 import com.sumsub.idensic.R
 import com.sumsub.idensic.common.Constants
 import com.sumsub.idensic.manager.ApiManager
-import com.sumsub.idensic.manager.PrefManager
+import com.sumsub.idensic.model.FlowItem
 import com.sumsub.idensic.screen.base.BaseFragment
 import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
 import com.sumsub.sns.core.data.listener.TokenExpirationHandler
+import com.sumsub.sns.core.data.model.FlowType
 import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSSDKState
@@ -52,11 +56,13 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var etActionName: TextInputEditText
     private lateinit var btnGenerateActionId: MaterialButton
     private lateinit var btnStartAction: MaterialButton
+    private lateinit var ibGetFlows: ImageButton
+    private lateinit var ibGetActions: ImageButton
 
     private val sdkFlowAccessTokenExpirationHandler = object : TokenExpirationHandler {
-        override fun onTokenExpired(): String? = runBlocking {
-            val token = PrefManager.getToken()
-            val userId = PrefManager.getUserId() ?: generateUserId()
+        override fun onTokenExpired(): String = runBlocking {
+            val token = prefManager.getToken()
+            val userId = prefManager.getUserId() ?: generateUserId()
 
             val newAccessToken = try {
                 val newResponse = ApiManager.getAccessTokenForFlow(token, userId)
@@ -67,16 +73,16 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 ""
             }
 
-            PrefManager.setAccessToken(newAccessToken)
+            prefManager.setAccessToken(newAccessToken)
             return@runBlocking newAccessToken
         }
     }
 
     private val sdkActionAccessTokenExpirationHandler = object : TokenExpirationHandler {
-        override fun onTokenExpired(): String? = runBlocking {
-            val token = PrefManager.getToken()
-            val userId = PrefManager.getUserId() ?: generateUserId()
-            val actionId = PrefManager.getActionId() ?: generateActionId()
+        override fun onTokenExpired(): String = runBlocking {
+            val token = prefManager.getToken()
+            val userId = prefManager.getUserId() ?: generateUserId()
+            val actionId = prefManager.getActionId() ?: generateActionId()
 
             val newAccessToken = try {
                 val newResponse = ApiManager.getAccessTokenForAction(token, userId, actionId)
@@ -87,7 +93,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 ""
             }
 
-            PrefManager.setAccessTokenAction(newAccessToken)
+            prefManager.setAccessTokenAction(newAccessToken)
             return@runBlocking newAccessToken
         }
     }
@@ -114,20 +120,22 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         etActionName = view.findViewById(R.id.et_action_name)
         btnGenerateActionId = view.findViewById(R.id.btn_generate_action_id)
         btnStartAction = view.findViewById(R.id.btn_start_action)
+        ibGetFlows = view.findViewById(R.id.ib_get_flows)
+        ibGetActions = view.findViewById(R.id.ib_get_actions)
 
         showProgress(false)
-        setAccessToken(PrefManager.getAccessToken())
-        setAccessTokenAction(PrefManager.getAccessTokenAction())
-        etUserId.setText(PrefManager.getUserId())
-        etActionId.setText(PrefManager.getUserId())
+        setAccessToken(prefManager.getAccessToken())
+        setAccessTokenAction(prefManager.getAccessTokenAction())
+        etUserId.setText(prefManager.getUserId())
+        etActionId.setText(prefManager.getUserId())
 
         toolbar.inflateMenu(R.menu.main)
         toolbar.setOnMenuItemClickListener {
             // Clear cache
-            PrefManager.setUsername(null)
-            PrefManager.setPassword(null)
-            PrefManager.setToken(null)
-            PrefManager.setAccessToken(null)
+            prefManager.setUsername(null)
+            prefManager.setPassword(null)
+            prefManager.setToken(null)
+            prefManager.setAccessToken(null)
 
             findNavController().navigate(R.id.action_main_to_sign_in)
             return@setOnMenuItemClickListener true
@@ -136,36 +144,43 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         btnStartFlow.setOnClickListener { startSDKFlow() }
         btnGenerateActionId.setOnClickListener { generateActionId() }
         btnStartAction.setOnClickListener { startSDKAction() }
+        ibGetFlows.setOnClickListener {
+            showFlowListDialog(filter = { it.type != FlowType.Actions }) { etFlowName.setText(it) }
+        }
+        ibGetActions.setOnClickListener {
+            showFlowListDialog(filter = { it.type == FlowType.Actions }) { etActionName.setText(it) }
+        }
     }
 
     private fun generateUserId(): String {
         return String.format(Constants.USER_ID, UUID.randomUUID().toString()).also {
-            PrefManager.setUserId(it)
+            prefManager.setUserId(it)
             etUserId.setText(it)
         }
     }
 
     private fun generateActionId(): String {
         return String.format(Constants.ACTION_ID, UUID.randomUUID().toString()).also {
-            PrefManager.setActionId(it)
+            prefManager.setActionId(it)
             etActionId.setText(it)
         }
     }
 
     private fun startSDKFlow() {
-        val token = PrefManager.getToken() ?: run {
+        val token = prefManager.getToken() ?: run {
             Toast.makeText(context, "A token is empty", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val userId = PrefManager.getUserId() ?: run {
+        val userId = prefManager.getUserId() ?: run {
             Toast.makeText(context, "An external user id is empty", Toast.LENGTH_SHORT).show()
             return
         }
 
         showProgress(true)
 
-        uiScope.launch {
+
+        lifecycleScope.launch {
             val accessToken = try {
                 ApiManager.getAccessTokenForFlow(token, userId).token
             } catch (e: Exception) {
@@ -205,24 +220,24 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun startSDKAction() {
-        val token = PrefManager.getToken() ?: run {
+        val token = prefManager.getToken() ?: run {
             Toast.makeText(context, "A token is empty", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val userId = PrefManager.getUserId() ?: run {
+        val userId = prefManager.getUserId() ?: run {
             Toast.makeText(context, "An external user id is empty", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val actionId = PrefManager.getActionId() ?: run {
+        val actionId = prefManager.getActionId() ?: run {
             Toast.makeText(context, "An external action id is empty", Toast.LENGTH_SHORT).show()
             return
         }
 
         showProgress(true)
 
-        uiScope.launch {
+        lifecycleScope.launch {
             val accessToken = try {
                 ApiManager.getAccessTokenForAction(token, userId, actionId).token
             } catch (e: Exception) {
@@ -317,12 +332,43 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun setAccessToken(accessToken: String?) {
         etAccessToken.setText(accessToken)
-        PrefManager.setAccessToken(accessToken)
+        prefManager.setAccessToken(accessToken)
     }
 
     private fun setAccessTokenAction(accessToken: String?) {
         etAccessTokenAction.setText(accessToken)
-        PrefManager.setAccessTokenAction(accessToken)
+        prefManager.setAccessTokenAction(accessToken)
+    }
+
+    private fun getFlows(onFlowList: (items: List<FlowItem>) -> Unit) {
+        val token = prefManager.getToken() ?: run {
+            Toast.makeText(context, "A token is empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            showProgress(true)
+            try {
+                onFlowList(ApiManager.getFlows(token).list.items.filter { it.target == "msdk" })
+            } catch (e: Exception) {
+                Timber.e(e)
+                Toast.makeText(context, "An error while getting flow list. Please, check your internet connection", Toast.LENGTH_SHORT).show()
+            }
+            showProgress(false)
+        }
+    }
+
+    private fun showFlowListDialog(filter: (FlowItem) -> Boolean, onSelected: (CharSequence) -> Unit) {
+        getFlows { flows ->
+            val items = flows.filter(filter).map { it.name }.toTypedArray()
+            MaterialAlertDialogBuilder(requireContext())
+                    .setItems(items) { dialog, which ->
+                        dialog.dismiss()
+                        onSelected(items[which])
+                    }
+                    .create()
+                    .show()
+        }
     }
 
     override fun getSoftInputMode(): Int = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE

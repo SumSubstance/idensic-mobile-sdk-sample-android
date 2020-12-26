@@ -22,6 +22,8 @@
         <item name="materialButtonStyle">@style/Widget.Button</item>
         <item name="toolbarStyle">@style/Widget.Toolbar</item>
         <item name="textInputStyle">@style/Widget.TextInputLayout</item>
+
+        <item name="imageButtonStyle">@style/ImageButtonStyle</item>
     </style>
 
     <style name="Widget"/>
@@ -69,5 +71,10 @@
 
     <style name="ShapeAppearance.TextInputLayout" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ImageButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="tint">@color/sns_white</item>
+        <item name="background">@null</item>
     </style>
 </resources>
