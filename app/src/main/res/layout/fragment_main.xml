@@ -38,7 +38,7 @@
                 android:id="@+id/g_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tl_access_token,tl_userid,tl_flow_name,btn_generate_userid,btn_start_flow,tl_actionid,tl_action_name,tl_access_token_action,btn_generate_action_id,btn_start_action" />
+                app:constraint_referenced_ids="tl_access_token,tl_userid,tl_flow_name,btn_generate_userid,btn_start_flow,tl_actionid,tl_action_name,tl_access_token_action,btn_generate_action_id,btn_start_action,ib_get_flows,ib_get_actions" />
 
             <ProgressBar
                 android:id="@+id/pb_progress"

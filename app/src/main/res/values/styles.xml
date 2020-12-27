@@ -73,8 +73,7 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="ImageButtonStyle" parent="Widget.MaterialComponents.Button">
+    <style name="ImageButtonStyle" parent="Widget.Button">
         <item name="tint">@color/sns_white</item>
-        <item name="background">@null</item>
     </style>
 </resources>
