@@ -73,7 +73,8 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="ImageButtonStyle" parent="Widget.Button">
+    <style name="ImageButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="tint">@color/sns_white</item>
+        <item name="android:background">@drawable/bg_image_button</item>
     </style>
 </resources>
