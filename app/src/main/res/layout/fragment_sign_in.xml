@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+    android:orientation="vertical">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,80 +26,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp"/>
+                app:layout_constraintGuide_begin="@dimen/margin_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp"/>
+                app:layout_constraintGuide_end="@dimen/margin_medium" />
 
-            <ProgressBar
-                android:id="@+id/pb_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
-                app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            <com.otaliastudios.cameraview.CameraView
+                android:id="@+id/camera"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:cameraAudio="off"
+                app:cameraFacing="back"
+                app:cameraPreview="glSurface"
+                app:cameraRequestPermissions="true"
+                app:cameraUseDeviceOrientation="false"
+                app:cameraWhiteBalance="daylight"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/g_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tl_username,tl_password,btn_sign_in"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_username"
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/username"
-                app:layout_constraintVertical_bias="0.2"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
-                app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tl_password">
+                android:layout_marginTop="@dimen/margin_medium"
+                android:gravity="center"
+                android:text="@string/scan_qr_code"
+                android:textAppearance="?textAppearanceHeadline5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/camera" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_password"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/password"
-                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
-                app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toBottomOf="@+id/tl_username"
-                app:layout_constraintBottom_toTopOf="@+id/btn_sign_in">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_sign_in"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
-                android:text="@string/sign_in"
-                app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
-                app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toBottomOf="@+id/tl_password"
-                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

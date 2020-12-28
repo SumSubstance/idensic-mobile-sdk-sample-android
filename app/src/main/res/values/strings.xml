@@ -15,6 +15,7 @@
     <string name="action_name">Action Name</string>
     <string name="default_flow">msdk-basic-kyc</string>
     <string name="default_action">action_liveness_check</string>
+    <string name="scan_qr_code">Scan QR code on the dashboard profile screen</string>
 
     <!-- Accept all files in gallery -->
     <string name="sns_gallery_type">*/*</string>

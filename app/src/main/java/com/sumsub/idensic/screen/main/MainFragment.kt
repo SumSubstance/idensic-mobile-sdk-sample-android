@@ -7,6 +7,7 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +16,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.sumsub.idensic.BuildConfig
 import com.sumsub.idensic.R
 import com.sumsub.idensic.common.Constants
 import com.sumsub.idensic.manager.ApiManager
@@ -59,13 +59,15 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var ibGetFlows: ImageButton
     private lateinit var ibGetActions: ImageButton
 
+    private lateinit var apiManager: ApiManager
+
     private val sdkFlowAccessTokenExpirationHandler = object : TokenExpirationHandler {
         override fun onTokenExpired(): String = runBlocking {
             val token = prefManager.getToken()
             val userId = prefManager.getUserId() ?: generateUserId()
 
             val newAccessToken = try {
-                val newResponse = ApiManager.getAccessTokenForFlow(token, userId)
+                val newResponse = apiManager.getAccessTokenForFlow(token, userId)
                 newResponse.token
             } catch (e: Exception) {
                 Timber.e(e)
@@ -85,7 +87,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val actionId = prefManager.getActionId() ?: generateActionId()
 
             val newAccessToken = try {
-                val newResponse = ApiManager.getAccessTokenForAction(token, userId, actionId)
+                val newResponse = apiManager.getAccessTokenForAction(token, userId, actionId)
                 newResponse.token
             } catch (e: Exception) {
                 Timber.e(e)
@@ -98,8 +100,22 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback { requireActivity().finish() }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val apiUrl = prefManager.getUrl()
+        if (apiUrl == null) {
+            findNavController().navigate(R.id.action_main_to_sign_in)
+            return
+        }
+
+        apiManager = ApiManager(apiUrl)
 
         toolbar = view.findViewById(R.id.toolbar)
         gContent = view.findViewById(R.id.g_content)
@@ -132,8 +148,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         toolbar.inflateMenu(R.menu.main)
         toolbar.setOnMenuItemClickListener {
             // Clear cache
-            prefManager.setUsername(null)
-            prefManager.setPassword(null)
+            prefManager.setUrl(null)
             prefManager.setToken(null)
             prefManager.setAccessToken(null)
 
@@ -182,7 +197,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         lifecycleScope.launch {
             val accessToken = try {
-                ApiManager.getAccessTokenForFlow(token, userId).token
+                apiManager.getAccessTokenForFlow(token, userId).token
             } catch (e: Exception) {
                 Toast.makeText(context, "An error while getting an access token. Please, check your applicant", Toast.LENGTH_SHORT).show()
                 showProgress(false)
@@ -191,7 +206,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             setAccessToken(accessToken)
 
-            val apiUrl = BuildConfig.API_URL // test-api.sumsub.com
+            val apiUrl = prefManager.getUrl() ?: return@launch
 
             // force SDK to show open settings dialog request
             val modules = listOf(SNSProoface(feature = SNSProoface.FEATURE_FACE_SHOW_SETTINGS))
@@ -239,7 +254,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         lifecycleScope.launch {
             val accessToken = try {
-                ApiManager.getAccessTokenForAction(token, userId, actionId).token
+                apiManager.getAccessTokenForAction(token, userId, actionId).token
             } catch (e: Exception) {
                 Toast.makeText(context, "An error while getting an access token. Please, check your applicant", Toast.LENGTH_SHORT).show()
                 showProgress(false)
@@ -248,7 +263,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             setAccessTokenAction(accessToken)
 
-            val apiUrl = BuildConfig.API_URL // test-api.sumsub.com
+            val apiUrl = prefManager.getUrl() ?: return@launch
+
             val modules = listOf(SNSLiveness3d(), SNSProoface())
             val actionName = etActionName.text.toString()
 
@@ -349,7 +365,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         lifecycleScope.launch {
             showProgress(true)
             try {
-                onFlowList(ApiManager.getFlows(token).list.items.filter { it.target == "msdk" })
+                onFlowList(apiManager.getFlows(token).list.items.filter { it.target == "msdk" })
             } catch (e: Exception) {
                 Timber.e(e)
                 Toast.makeText(context, "An error while getting flow list. Please, check your internet connection", Toast.LENGTH_SHORT).show()

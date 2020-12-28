@@ -25,14 +25,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/margin_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/margin_medium" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/g_content"
@@ -53,7 +53,7 @@
                 android:id="@+id/tl_userid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:hint="@string/user_id"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -71,7 +71,7 @@
                 android:id="@+id/tl_access_token"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:hint="@string/access_token"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -89,7 +89,8 @@
                 android:id="@+id/tl_flow_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
                 android:hint="@string/flow_name"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toLeftOf="@+id/ib_get_flows"
@@ -108,18 +109,18 @@
 
             <ImageButton
                 android:id="@+id/ib_get_flows"
-                android:src="@drawable/ic_list"
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
-                app:layout_constraintTop_toTopOf="@id/tl_flow_name"
+                android:src="@drawable/ic_list"
                 app:layout_constraintBottom_toBottomOf="@id/tl_flow_name"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right" />
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintTop_toTopOf="@id/tl_flow_name" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_generate_userid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:text="@string/generate_new_userid"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -129,7 +130,7 @@
                 android:id="@+id/btn_start_flow"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/start_flow"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -139,7 +140,7 @@
                 android:id="@+id/tl_actionid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/margin_large"
                 android:hint="@string/action_id"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -157,7 +158,7 @@
                 android:id="@+id/tl_access_token_action"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:hint="@string/access_token"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -175,7 +176,8 @@
                 android:id="@+id/tl_action_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
                 android:hint="@string/action_name"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toLeftOf="@+id/ib_get_actions"
@@ -192,18 +194,18 @@
 
             <ImageButton
                 android:id="@+id/ib_get_actions"
-                android:src="@drawable/ic_list"
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
-                app:layout_constraintTop_toTopOf="@id/tl_action_name"
+                android:src="@drawable/ic_list"
                 app:layout_constraintBottom_toBottomOf="@id/tl_action_name"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right" />
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintTop_toTopOf="@id/tl_action_name" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_generate_action_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/margin_large"
                 android:text="@string/generate_new_actionid"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
@@ -213,7 +215,7 @@
                 android:id="@+id/btn_start_action"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/start_action"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"

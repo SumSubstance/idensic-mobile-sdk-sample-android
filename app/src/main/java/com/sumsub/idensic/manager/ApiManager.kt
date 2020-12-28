@@ -10,13 +10,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiManager {
+class ApiManager(private val apiUrl: String) {
 
     private val service: ApiService by lazy { retrofit.create(ApiService::class.java) }
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
+            .baseUrl(apiUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

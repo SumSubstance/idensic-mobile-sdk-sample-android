@@ -7,6 +7,7 @@ import com.sumsub.idensic.R
 import com.sumsub.idensic.common.Constants
 import com.sumsub.idensic.screen.base.BaseFragment
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class SplashFragment: BaseFragment(R.layout.fragment_splash) {
 
@@ -20,7 +21,7 @@ class SplashFragment: BaseFragment(R.layout.fragment_splash) {
         }
 
         view.postDelayed({
-            val loggedIn = !prefManager.getUsername().isNullOrBlank()
+            val loggedIn = !prefManager.getToken().isNullOrBlank()
             val actionId = if (loggedIn) {
                 R.id.action_splash_to_main
             } else {
@@ -28,6 +29,6 @@ class SplashFragment: BaseFragment(R.layout.fragment_splash) {
             }
 
             findNavController().navigate(actionId)
-        }, 3000)
+        }, TimeUnit.SECONDS.toMillis(1))
     }
 }

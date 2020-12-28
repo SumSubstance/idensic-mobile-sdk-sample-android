@@ -1,6 +1,7 @@
 package com.sumsub.idensic.screen.signin
 
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import android.view.WindowManager
 import android.widget.ProgressBar
@@ -12,78 +13,67 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
+import com.google.mlkit.vision.barcode.Barcode
+import com.google.mlkit.vision.barcode.BarcodeScanner
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.common.InputImage
+import com.otaliastudios.cameraview.CameraView
 import com.sumsub.idensic.R
 import com.sumsub.idensic.manager.ApiManager
 import com.sumsub.idensic.screen.base.BaseFragment
 import kotlinx.coroutines.launch
 
-class SignInFragment: BaseFragment(R.layout.fragment_sign_in) {
+class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
-    private lateinit var gContent: Group
-    private lateinit var pbProgress: ProgressBar
-    private lateinit var tlUsername: TextInputLayout
-    private lateinit var etUsername: TextInputEditText
-    private lateinit var tlPassword: TextInputLayout
-    private lateinit var etPassword: TextInputEditText
-    private lateinit var btnSignIn: MaterialButton
+    private lateinit var cvCamera: CameraView
+    private lateinit var scanner: BarcodeScanner
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val options = BarcodeScannerOptions.Builder()
+                .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+                .build()
+        scanner = BarcodeScanning.getClient(options)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gContent = view.findViewById(R.id.g_content)
-        pbProgress = view.findViewById(R.id.pb_progress)
-        tlUsername = view.findViewById(R.id.tl_username)
-        etUsername = view.findViewById(R.id.et_username)
-        tlPassword = view.findViewById(R.id.tl_password)
-        etPassword = view.findViewById(R.id.et_password)
-        btnSignIn = view.findViewById(R.id.btn_sign_in)
+        cvCamera = view.findViewById(R.id.camera)
+        initCamera()
 
-        showProgress(false)
-        btnSignIn.setOnClickListener { login() }
-        etUsername.doAfterTextChanged { tlUsername.error = null }
-        etPassword.doAfterTextChanged { tlPassword.error = null }
     }
 
-    private fun login() {
-        val username = etUsername.text?.toString()
-        val password = etPassword.text?.toString()
-        var error = false
+    private fun initCamera() {
 
-        if (username.isNullOrEmpty()) {
-            error = true
-            tlUsername.error = "Username is empty"
+        cvCamera.setLifecycleOwner(this)
+        cvCamera.addFrameProcessor { frame ->
+            processImage(frame.format, frame.rotationToView, frame.size.width, frame.size.height, frame.getData() as ByteArray)
         }
 
-        if (password.isNullOrEmpty()) {
-            error = true
-            tlPassword.error = "Password is empty"
-        }
+    }
 
-        if (error) {
-            return
-        }
-
-        showProgress(true)
-
-        lifecycleScope.launch {
-            try {
-                val response = ApiManager.login(username!!, password!!)
-                prefManager.setUsername(username)
-                prefManager.setPassword(password)
-                prefManager.setToken(response.payload)
-
-                findNavController().navigate(R.id.action_sign_in_to_main)
-            } catch (exception: Exception) {
-                Toast.makeText(context, "Please, check your credentials or the internet connection and try again", Toast.LENGTH_SHORT).show()
-            } finally {
-                showProgress(false)
+    private fun processImage(format: Int, rotation: Int, width: Int, height: Int, data: ByteArray) {
+        val image = InputImage.fromByteArray(data, width, height, rotation, format)
+        scanner.process(image).addOnSuccessListener { barcodes ->
+            barcodes.forEach { barcode ->
+                try {
+                    val loginData = Gson().fromJson(String(Base64.decode(barcode.rawValue, Base64.NO_WRAP)), LoginData::class.java)
+                    prefManager.setUrl(loginData.url)
+                    prefManager.setToken(loginData.t)
+                    findNavController().navigate(R.id.action_sign_in_to_main)
+                } catch (e: Exception) {
+                }
             }
         }
     }
 
-    private fun showProgress(show: Boolean) {
-        gContent.visibility = if (show) View.GONE else View.VISIBLE
-        pbProgress.visibility = if (show) View.VISIBLE else View.GONE
+    override fun onDestroy() {
+        scanner.close()
+        super.onDestroy()
     }
 
     override fun getSoftInputMode(): Int = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
