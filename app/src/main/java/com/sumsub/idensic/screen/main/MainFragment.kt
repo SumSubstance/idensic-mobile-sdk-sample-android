@@ -103,7 +103,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback { requireActivity().finish() }
+        requireActivity().onBackPressedDispatcher.addCallback {
+            activity?.finish()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
