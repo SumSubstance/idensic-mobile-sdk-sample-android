@@ -23,6 +23,7 @@ import com.sumsub.idensic.model.FlowItem
 import com.sumsub.idensic.screen.base.BaseFragment
 import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
+import com.sumsub.sns.core.data.listener.SNSActionResultHandler
 import com.sumsub.sns.core.data.listener.TokenExpirationHandler
 import com.sumsub.sns.core.data.model.FlowType
 import com.sumsub.sns.core.data.model.SNSCompletionResult
@@ -285,9 +286,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                     .withHandlers(
                         onStateChanged = onSDKStateChangedHandler,
                         onCompleted = onSDKCompletedHandler,
-                        onError = onSDKErrorHandler,
-                        onActionResult = onActionResult
+                        onError = onSDKErrorHandler
                     )
+                    .withActionResultHandler(onActionResult)
                     .build()
 
             snsSdk.launch()
@@ -337,10 +338,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getOnActionResult(): (String, String?) -> SNSActionResult = { actionId, answer ->
-        Timber.d("Action Result: actionId: $actionId answer: $answer")
-        // use default scenario
-        SNSActionResult.Continue
+    private fun getOnActionResult(): SNSActionResultHandler = object : SNSActionResultHandler {
+        override fun onActionResult(actionId: String, actionType: String, answer: String?, allowContinuing: Boolean): SNSActionResult {
+            Timber.d("Action Result: actionId: $actionId answer: $answer")
+            // use default scenario
+            return SNSActionResult.Continue
+        }
     }
 
     private fun showProgress(show: Boolean) {
