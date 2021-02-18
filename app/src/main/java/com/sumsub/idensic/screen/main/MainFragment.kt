@@ -29,7 +29,6 @@ import com.sumsub.sns.core.data.model.FlowType
 import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSSDKState
-import com.sumsub.sns.liveness3d.SNSLiveness3d
 import com.sumsub.sns.prooface.SNSProoface
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -268,7 +267,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val apiUrl = prefManager.getUrl() ?: return@launch
 
-            val modules = listOf(SNSLiveness3d(), SNSProoface())
+            val modules = listOf(SNSProoface())
             val actionName = etActionName.text.toString()
 
             val onSDKStateChangedHandler = getOnStateChangeListener()

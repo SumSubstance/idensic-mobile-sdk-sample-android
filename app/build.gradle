@@ -9,8 +9,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 11501
-        versionName "1.15.1"
+        versionCode 11600
+        versionName "1.16.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.3.2"
+    def nav_version = "2.3.3"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -51,8 +51,5 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.15.1"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-liveness3d:1.15.1"
-
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.16.0"
 }
