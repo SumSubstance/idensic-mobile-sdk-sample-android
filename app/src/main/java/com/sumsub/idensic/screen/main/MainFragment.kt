@@ -23,8 +23,7 @@ import com.sumsub.idensic.model.FlowItem
 import com.sumsub.idensic.screen.base.BaseFragment
 import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
-import com.sumsub.sns.core.data.listener.SNSActionResultHandler
-import com.sumsub.sns.core.data.listener.TokenExpirationHandler
+import com.sumsub.sns.core.data.listener.*
 import com.sumsub.sns.core.data.model.FlowType
 import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
@@ -215,20 +214,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val flowName = etFlowName.text.toString()
 
-            val onSDKStateChangedHandler = getOnStateChangeListener()
-
-            val onSDKCompletedHandler = getOnSDKCompletedHandler(requireContext().applicationContext)
-
-            val onSDKErrorHandler = getOnSDKErrorHandler(requireContext().applicationContext)
-
             val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, flowName)
                     .withAccessToken(accessToken, onTokenExpiration = sdkFlowAccessTokenExpirationHandler)
                     .withDebug(true)
                     .withModules(modules)
-                    .withHandlers(
-                        onStateChanged = onSDKStateChangedHandler,
-                        onCompleted = onSDKCompletedHandler,
-                        onError = onSDKErrorHandler)
+                    .withStateChangedHandler(getOnStateChangeListener())
+                    .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
+                    .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
+                    .withEventHandler(getOnEventHandler())
                     .build()
 
             snsSdk.launch()
@@ -270,24 +263,15 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val modules = listOf(SNSProoface())
             val actionName = etActionName.text.toString()
 
-            val onSDKStateChangedHandler = getOnStateChangeListener()
-
-            val onSDKCompletedHandler = getOnSDKCompletedHandler(requireContext().applicationContext)
-
-            val onSDKErrorHandler = getOnSDKErrorHandler(requireContext().applicationContext)
-
-            val onActionResult = getOnActionResult()
-
             val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, actionName)
                     .withAccessToken(accessToken, onTokenExpiration = sdkActionAccessTokenExpirationHandler)
                     .withDebug(true)
                     .withModules(modules)
-                    .withHandlers(
-                        onStateChanged = onSDKStateChangedHandler,
-                        onCompleted = onSDKCompletedHandler,
-                        onError = onSDKErrorHandler
-                    )
-                    .withActionResultHandler(onActionResult)
+                    .withStateChangedHandler(getOnStateChangeListener())
+                    .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
+                    .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
+                    .withEventHandler(getOnEventHandler())
+                    .withActionResultHandler(getOnActionResult())
                     .build()
 
             snsSdk.launch()
@@ -295,45 +279,51 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getOnStateChangeListener(): (SNSSDKState, SNSSDKState) -> Unit = { newState, prevState ->
-        Timber.d("The SDK state was changed: $prevState -> $newState")
+    private fun getOnStateChangeListener(): SNSStateChangedHandler = object : SNSStateChangedHandler {
+        override fun onStateChanged(previousState: SNSSDKState, currentState: SNSSDKState) {
+            Timber.d("The SDK state was changed: $previousState -> $currentState")
 
-        when (newState) {
-            is SNSSDKState.Ready -> Timber.d("SDK is ready")
-            is SNSSDKState.Failed -> {
-                when (newState) {
-                    is SNSSDKState.Failed.Unauthorized -> Timber.e(newState.exception, "Invalid token or a token can't be refreshed by the SDK. Please, check your token expiration handler")
-                    is SNSSDKState.Failed.Unknown -> Timber.e(newState.exception, "Unknown error")
+            when (currentState) {
+                is SNSSDKState.Ready -> Timber.d("SDK is ready")
+                is SNSSDKState.Failed -> {
+                    when (currentState) {
+                        is SNSSDKState.Failed.Unauthorized -> Timber.e(currentState.exception, "Invalid token or a token can't be refreshed by the SDK. Please, check your token expiration handler")
+                        is SNSSDKState.Failed.Unknown -> Timber.e(currentState.exception, "Unknown error")
+                    }
                 }
+                is SNSSDKState.Initial -> Timber.d("No verification steps are passed yet")
+                is SNSSDKState.Incomplete -> Timber.d("Some but not all verification steps are passed over")
+                is SNSSDKState.Pending -> Timber.d("Verification is in pending state")
+                is SNSSDKState.FinallyRejected -> Timber.d("Applicant has been finally rejected")
+                is SNSSDKState.TemporarilyDeclined -> Timber.d("Applicant has been declined temporarily")
+                is SNSSDKState.Approved -> Timber.d("Applicant has been approved")
+                is SNSSDKState.ActionCompleted -> Timber.d("Action is completed")
             }
-            is SNSSDKState.Initial -> Timber.d("No verification steps are passed yet")
-            is SNSSDKState.Incomplete -> Timber.d("Some but not all verification steps are passed over")
-            is SNSSDKState.Pending -> Timber.d("Verification is in pending state")
-            is SNSSDKState.FinallyRejected -> Timber.d("Applicant has been finally rejected")
-            is SNSSDKState.TemporarilyDeclined -> Timber.d("Applicant has been declined temporarily")
-            is SNSSDKState.Approved -> Timber.d("Applicant has been approved")
-            is SNSSDKState.ActionCompleted -> Timber.d("Action is completed")
         }
     }
 
-    private fun getOnSDKCompletedHandler(context: Context): (SNSCompletionResult, SNSSDKState) -> Unit = { result, state ->
-        Timber.d("The SDK is finished. Result: $result, State: $state")
-        Toast.makeText(context, "The SDK is finished. Result: $result, State: $state", Toast.LENGTH_SHORT).show()
+    private fun getOnSDKCompletedHandler(context: Context): SNSCompleteHandler = object : SNSCompleteHandler {
+        override fun onComplete(result: SNSCompletionResult, state: SNSSDKState) {
+            Timber.d("The SDK is finished. Result: $result, State: $state")
+            Toast.makeText(context, "The SDK is finished. Result: $result, State: $state", Toast.LENGTH_SHORT).show()
 
-        when (result) {
-            is SNSCompletionResult.SuccessTermination -> Timber.d(result.toString())
-            is SNSCompletionResult.AbnormalTermination -> Timber.d(result.exception)
+            when (result) {
+                is SNSCompletionResult.SuccessTermination -> Timber.d(result.toString())
+                is SNSCompletionResult.AbnormalTermination -> Timber.d(result.exception)
+            }
         }
     }
 
-    private fun getOnSDKErrorHandler(context: Context): (SNSException) -> Unit = { exception ->
-        Timber.d("The SDK throws an exception. Exception: $exception")
-        Toast.makeText(context, "The SDK throws an exception. Exception: $exception", Toast.LENGTH_SHORT).show()
+    private fun getOnSDKErrorHandler(context: Context): SNSErrorHandler = object : SNSErrorHandler {
+        override fun onError(exception: SNSException) {
+            Timber.d("The SDK throws an exception. Exception: $exception")
+            Toast.makeText(context, "The SDK throws an exception. Exception: $exception", Toast.LENGTH_SHORT).show()
 
-        when (exception) {
-            is SNSException.Api -> Timber.d("Api exception. ${exception.description}")
-            is SNSException.Network -> Timber.d(exception, "Network exception.")
-            is SNSException.Unknown -> Timber.d(exception, "Unknown exception.")
+            when (exception) {
+                is SNSException.Api -> Timber.d("Api exception. ${exception.description}")
+                is SNSException.Network -> Timber.d(exception, "Network exception.")
+                is SNSException.Unknown -> Timber.d(exception, "Unknown exception.")
+            }
         }
     }
 
@@ -343,6 +333,20 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             // use default scenario
             return SNSActionResult.Continue
         }
+    }
+
+    private fun getOnEventHandler(): SNSEventHandler = object : SNSEventHandler {
+        override fun onEvent(event: SNSEvent) {
+            when (event) {
+                is SNSEvent.SNSEventStepInitiated -> {
+                    Timber.d("onEvent: step initiated")
+                }
+                is SNSEvent.SNSEventStepCompleted -> {
+                    Timber.d("onEvent: step completed")
+                }
+            }
+        }
+
     }
 
     private fun showProgress(show: Boolean) {

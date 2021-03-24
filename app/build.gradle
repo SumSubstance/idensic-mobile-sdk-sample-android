@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.sumsub.idensic"
         minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 11601
-        versionName "1.16.1"
+        targetSdkVersion 30
+        versionCode 11700
+        versionName "1.17.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.3.3"
+    def nav_version = "2.3.4"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -51,5 +51,5 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.16.1"
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.17.0"
 }
