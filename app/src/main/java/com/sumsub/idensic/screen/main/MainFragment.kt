@@ -209,8 +209,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val apiUrl = prefManager.getUrl() ?: return@launch
 
-            // force SDK to show open settings dialog request
-            val modules = listOf(SNSProoface(feature = SNSProoface.FEATURE_FACE_SHOW_SETTINGS))
+            val modules = listOf(SNSProoface())
 
             val flowName = etFlowName.text.toString()
 
