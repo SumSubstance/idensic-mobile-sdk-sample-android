@@ -9,8 +9,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 11702
-        versionName "1.17.2"
+        versionCode 11703
+        versionName "1.17.3"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -51,5 +51,5 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation "com.sumsub.sns:idensic-mobile-sdk:1.17.2"
+    implementation "com.sumsub.sns:idensic-mobile-sdk:1.17.3"
 }
