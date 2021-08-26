@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.sumsub.idensic.R
 import com.sumsub.idensic.common.Constants
 import com.sumsub.idensic.manager.ApiManager
-import com.sumsub.idensic.model.FlowItem
+import com.sumsub.idensic.model.Level
 import com.sumsub.idensic.screen.base.BaseFragment
 import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
@@ -43,10 +43,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var etUserId: TextInputEditText
     private lateinit var tlAccessToken: TextInputLayout
     private lateinit var etAccessToken: TextInputEditText
-    private lateinit var tlFlowName: TextInputLayout
-    private lateinit var etFlowName: TextInputEditText
+    private lateinit var tlLevelName: TextInputLayout
+    private lateinit var etLevelName: TextInputEditText
     private lateinit var btnGenerateUserId: MaterialButton
-    private lateinit var btnStartFlow: MaterialButton
+    private lateinit var btnStartLevel: MaterialButton
     private lateinit var tlActionId: TextInputLayout
     private lateinit var etActionId: TextInputEditText
     private lateinit var tlAccessTokenAction: TextInputLayout
@@ -55,7 +55,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var etActionName: TextInputEditText
     private lateinit var btnGenerateActionId: MaterialButton
     private lateinit var btnStartAction: MaterialButton
-    private lateinit var ibGetFlows: ImageButton
+    private lateinit var ibGetLevels: ImageButton
     private lateinit var ibGetActions: ImageButton
 
     private lateinit var apiManager: ApiManager
@@ -64,9 +64,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         override fun onTokenExpired(): String = runBlocking {
             val token = prefManager.getToken()
             val userId = prefManager.getUserId() ?: generateUserId()
+            val levelName = etLevelName.text.toString()
 
             val newAccessToken = try {
-                val newResponse = apiManager.getAccessTokenForFlow(token, userId)
+                val newResponse = apiManager.getAccessTokenForLevel(token, userId, levelName)
                 newResponse.token
             } catch (e: Exception) {
                 Timber.e(e)
@@ -84,9 +85,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val token = prefManager.getToken()
             val userId = prefManager.getUserId() ?: generateUserId()
             val actionId = prefManager.getActionId() ?: generateActionId()
+            val levelName = etLevelName.text.toString()
 
             val newAccessToken = try {
-                val newResponse = apiManager.getAccessTokenForAction(token, userId, actionId)
+                val newResponse = apiManager.getAccessTokenForAction(token, userId, levelName, actionId)
                 newResponse.token
             } catch (e: Exception) {
                 Timber.e(e)
@@ -125,10 +127,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         etUserId = view.findViewById(R.id.et_userid)
         tlAccessToken = view.findViewById(R.id.tl_access_token)
         etAccessToken = view.findViewById(R.id.et_access_token)
-        tlFlowName = view.findViewById(R.id.tl_flow_name)
-        etFlowName = view.findViewById(R.id.et_flow_name)
+        tlLevelName = view.findViewById(R.id.tl_level_name)
+        etLevelName = view.findViewById(R.id.et_level_name)
         btnGenerateUserId = view.findViewById(R.id.btn_generate_userid)
-        btnStartFlow = view.findViewById(R.id.btn_start_flow)
+        btnStartLevel = view.findViewById(R.id.btn_start_level)
         tlActionId = view.findViewById(R.id.tl_actionid)
         etActionId = view.findViewById(R.id.et_actionid)
         tlAccessTokenAction = view.findViewById(R.id.tl_access_token_action)
@@ -137,7 +139,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         etActionName = view.findViewById(R.id.et_action_name)
         btnGenerateActionId = view.findViewById(R.id.btn_generate_action_id)
         btnStartAction = view.findViewById(R.id.btn_start_action)
-        ibGetFlows = view.findViewById(R.id.ib_get_flows)
+        ibGetLevels = view.findViewById(R.id.ib_get_levels)
         ibGetActions = view.findViewById(R.id.ib_get_actions)
 
         showProgress(false)
@@ -157,14 +159,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             return@setOnMenuItemClickListener true
         }
         btnGenerateUserId.setOnClickListener { generateUserId() }
-        btnStartFlow.setOnClickListener { startSDKFlow() }
+        btnStartLevel.setOnClickListener { startSDKLevel() }
         btnGenerateActionId.setOnClickListener { generateActionId() }
         btnStartAction.setOnClickListener { startSDKAction() }
-        ibGetFlows.setOnClickListener {
-            showFlowListDialog(filter = { it.type != FlowType.Actions }) { etFlowName.setText(it) }
+        ibGetLevels.setOnClickListener {
+            showLevelListDialog(filter = { !it.isAction }) { etLevelName.setText(it) }
         }
         ibGetActions.setOnClickListener {
-            showFlowListDialog(filter = { it.type == FlowType.Actions }) { etActionName.setText(it) }
+            showLevelListDialog(filter = { it.isAction }) { etActionName.setText(it) }
         }
     }
 
@@ -182,7 +184,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun startSDKFlow() {
+    private fun startSDKLevel() {
         val token = prefManager.getToken() ?: run {
             Toast.makeText(context, "A token is empty", Toast.LENGTH_SHORT).show()
             return
@@ -193,12 +195,13 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             return
         }
 
-        showProgress(true)
+        val levelName = etLevelName.text.toString()
 
+        showProgress(true)
 
         lifecycleScope.launch {
             val accessToken = try {
-                apiManager.getAccessTokenForFlow(token, userId).token
+                apiManager.getAccessTokenForLevel(token, userId, levelName).token
             } catch (e: Exception) {
                 Toast.makeText(context, "An error while getting an access token. Please, check your applicant", Toast.LENGTH_SHORT).show()
                 showProgress(false)
@@ -211,9 +214,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val modules = listOf(SNSProoface())
 
-            val flowName = etFlowName.text.toString()
-
-            val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, flowName)
+            val snsSdk = SNSMobileSDK.Builder(requireActivity())
+                    .withBaseUrl(apiUrl)
                     .withAccessToken(accessToken, onTokenExpiration = sdkFlowAccessTokenExpirationHandler)
                     .withDebug(true)
                     .withModules(modules)
@@ -244,11 +246,13 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             return
         }
 
+        val levelName = etLevelName.text.toString()
+
         showProgress(true)
 
         lifecycleScope.launch {
             val accessToken = try {
-                apiManager.getAccessTokenForAction(token, userId, actionId).token
+                apiManager.getAccessTokenForAction(token, userId, levelName, actionId).token
             } catch (e: Exception) {
                 Toast.makeText(context, "An error while getting an access token. Please, check your applicant", Toast.LENGTH_SHORT).show()
                 showProgress(false)
@@ -260,9 +264,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val apiUrl = prefManager.getUrl() ?: return@launch
 
             val modules = listOf(SNSProoface())
-            val actionName = etActionName.text.toString()
 
-            val snsSdk = SNSMobileSDK.Builder(requireActivity(), apiUrl, actionName)
+            val snsSdk = SNSMobileSDK.Builder(requireActivity())
+                    .withBaseUrl(apiUrl)
                     .withAccessToken(accessToken, onTokenExpiration = sdkActionAccessTokenExpirationHandler)
                     .withDebug(true)
                     .withModules(modules)
@@ -363,7 +367,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         prefManager.setAccessTokenAction(accessToken)
     }
 
-    private fun getFlows(onFlowList: (items: List<FlowItem>) -> Unit) {
+    private fun getLevels(onLevelList: (items: List<Level>) -> Unit) {
         val token = prefManager.getToken() ?: run {
             Toast.makeText(context, "A token is empty", Toast.LENGTH_SHORT).show()
             return
@@ -372,7 +376,15 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         lifecycleScope.launch {
             showProgress(true)
             try {
-                onFlowList(apiManager.getFlows(token).list.items.filter { it.target == "msdk" })
+                val levels = apiManager.getLevels(token).list.items
+                        .filter { it.id != null && it.name != null }
+                        .map { item ->
+                            val isAction = item.msdkFlowId?.let {
+                                apiManager.getFlow(token, it)?.type == FlowType.Actions
+                            } ?: false
+                            Level(item.id!!, item.name!!, isAction)
+                        }
+                onLevelList(levels)
             } catch (e: Exception) {
                 Timber.e(e)
                 Toast.makeText(context, "An error while getting flow list. Please, check your internet connection", Toast.LENGTH_SHORT).show()
@@ -381,9 +393,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun showFlowListDialog(filter: (FlowItem) -> Boolean, onSelected: (CharSequence) -> Unit) {
-        getFlows { flows ->
-            val items = flows.filter(filter).map { it.name }.toTypedArray()
+    private fun showLevelListDialog(filter: (Level) -> Boolean, onSelected: (CharSequence) -> Unit) {
+        getLevels { levels ->
+            val items = levels.filter(filter).mapNotNull { it.name }.toTypedArray()
             MaterialAlertDialogBuilder(requireContext())
                     .setItems(items) { dialog, which ->
                         dialog.dismiss()
@@ -396,3 +408,4 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     override fun getSoftInputMode(): Int = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 }
+

@@ -38,7 +38,7 @@
                 android:id="@+id/g_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tl_access_token,tl_userid,tl_flow_name,btn_generate_userid,btn_start_flow,tl_actionid,tl_action_name,tl_access_token_action,btn_generate_action_id,btn_start_action,ib_get_flows,ib_get_actions" />
+                app:constraint_referenced_ids="tl_access_token,tl_userid,tl_level_name,btn_generate_userid,btn_start_level,tl_actionid,tl_action_name,tl_access_token_action,btn_generate_action_id,btn_start_action,ib_get_levels,ib_get_actions" />
 
             <ProgressBar
                 android:id="@+id/pb_progress"
@@ -86,35 +86,35 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_flow_name"
+                android:id="@+id/tl_level_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:layout_marginEnd="@dimen/margin_small"
-                android:hint="@string/flow_name"
+                android:hint="@string/level_name"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
-                app:layout_constraintRight_toLeftOf="@+id/ib_get_flows"
+                app:layout_constraintRight_toLeftOf="@+id/ib_get_levels"
                 app:layout_constraintTop_toBottomOf="@id/tl_access_token"
                 app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintVertical_chainStyle="packed">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_flow_name"
+                    android:id="@+id/et_level_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@string/default_flow"
+                    android:text="@string/default_level"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
-                android:id="@+id/ib_get_flows"
+                android:id="@+id/ib_get_levels"
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
                 android:src="@drawable/ic_list"
-                app:layout_constraintBottom_toBottomOf="@id/tl_flow_name"
+                app:layout_constraintBottom_toBottomOf="@id/tl_level_name"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
-                app:layout_constraintTop_toTopOf="@id/tl_flow_name" />
+                app:layout_constraintTop_toTopOf="@id/tl_level_name" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_generate_userid"
@@ -124,14 +124,14 @@
                 android:text="@string/generate_new_userid"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toBottomOf="@+id/tl_flow_name" />
+                app:layout_constraintTop_toBottomOf="@+id/tl_level_name" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_start_flow"
+                android:id="@+id/btn_start_level"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
-                android:text="@string/start_flow"
+                android:text="@string/start_level"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
                 app:layout_constraintTop_toBottomOf="@+id/btn_generate_userid" />
@@ -144,7 +144,7 @@
                 android:hint="@string/action_id"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
                 app:layout_constraintRight_toRightOf="@+id/guideline_right"
-                app:layout_constraintTop_toBottomOf="@id/btn_start_flow">
+                app:layout_constraintTop_toBottomOf="@id/btn_start_level">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_actionid"

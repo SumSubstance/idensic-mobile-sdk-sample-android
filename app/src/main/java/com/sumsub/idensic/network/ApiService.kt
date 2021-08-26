@@ -1,12 +1,7 @@
 package com.sumsub.idensic.network
 
-import com.sumsub.idensic.model.AccessTokenResponse
-import com.sumsub.idensic.model.FlowListResponse
-import com.sumsub.idensic.model.PayloadResponse
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.sumsub.idensic.model.*
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -14,9 +9,12 @@ interface ApiService {
     suspend fun login(@Header("Authorization") authorization: String, @Query("ttlInSecs") ttlInSecs: Int = 999999): PayloadResponse
 
     @POST("resources/accessTokens")
-    suspend fun getAccessToken(@Header("Authorization") authorization: String, @Query("userId") userId: String, @Query("externalActionId") externalActionId: String? = null, @Query("ttlInSecs") ttlInSecs: Int = 999999): AccessTokenResponse
+    suspend fun getAccessToken(@Header("Authorization") authorization: String, @Query("levelName") levelName: String?, @Query("userId") userId: String, @Query("externalActionId") externalActionId: String? = null, @Query("ttlInSecs") ttlInSecs: Int = 999999): AccessTokenResponse
 
-    @GET("/resources/sdkIntegrations/flows")
-    suspend fun getFlows(@Header("Authorization") authorization: String): FlowListResponse
+    @GET("resources/applicants/-/levels")
+    suspend fun getLevels(@Header("Authorization") authorization: String): LevelListResponse
+
+    @GET("resources/sdkIntegrations/flows/{flowid}")
+    suspend fun getFlow(@Header("Authorization") authorization: String, @Path("flowid") flowid: String) : FlowItem?
 
 }
