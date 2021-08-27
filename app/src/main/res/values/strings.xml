@@ -14,7 +14,7 @@
     <string name="level_name">Level Name</string>
     <string name="action_name">Action Name</string>
     <string name="default_level">msdk-basic-kyc</string>
-    <string name="default_action">action_liveness_check</string>
+    <string name="default_action">Liveness_action</string>
     <string name="scan_qr_code">Scan QR code on the dashboard profile screen</string>
 
     <!-- Accept all files in gallery -->
