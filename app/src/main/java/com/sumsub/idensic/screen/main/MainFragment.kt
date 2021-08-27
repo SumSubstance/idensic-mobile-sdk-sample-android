@@ -85,7 +85,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val token = prefManager.getToken()
             val userId = prefManager.getUserId() ?: generateUserId()
             val actionId = prefManager.getActionId() ?: generateActionId()
-            val levelName = etLevelName.text.toString()
+            val levelName = etActionName.text.toString()
 
             val newAccessToken = try {
                 val newResponse = apiManager.getAccessTokenForAction(token, userId, levelName, actionId)
@@ -246,7 +246,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             return
         }
 
-        val levelName = etLevelName.text.toString()
+        val levelName = etActionName.text.toString()
 
         showProgress(true)
 
