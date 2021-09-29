@@ -1,0 +1,3 @@
+include:
+  - project: mobile/demo-builds-group/ci
+    file: gitlab-ci-sample-apps.yml
