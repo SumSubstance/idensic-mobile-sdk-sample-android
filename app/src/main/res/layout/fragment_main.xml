@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -112,6 +111,7 @@
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
                 android:src="@drawable/ic_list"
+                android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@id/tl_level_name"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintTop_toTopOf="@id/tl_level_name" />
@@ -197,6 +197,7 @@
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
                 android:src="@drawable/ic_list"
+                android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@id/tl_action_name"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintTop_toTopOf="@id/tl_action_name" />

@@ -3,9 +3,7 @@ package com.sumsub.idensic.manager
 import com.google.gson.Gson
 import com.sumsub.idensic.BuildConfig
 import com.sumsub.idensic.model.AccessTokenResponse
-import com.sumsub.idensic.model.PayloadResponse
 import com.sumsub.idensic.network.ApiService
-import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

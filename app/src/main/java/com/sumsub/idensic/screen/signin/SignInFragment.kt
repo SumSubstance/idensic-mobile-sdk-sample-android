@@ -4,16 +4,8 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import android.view.WindowManager
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.constraintlayout.widget.Group
-import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -22,9 +14,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import com.otaliastudios.cameraview.CameraView
 import com.sumsub.idensic.R
-import com.sumsub.idensic.manager.ApiManager
 import com.sumsub.idensic.screen.base.BaseFragment
-import kotlinx.coroutines.launch
 
 class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
