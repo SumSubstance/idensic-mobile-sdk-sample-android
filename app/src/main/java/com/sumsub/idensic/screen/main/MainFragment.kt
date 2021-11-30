@@ -27,6 +27,7 @@ import com.sumsub.sns.core.data.listener.*
 import com.sumsub.sns.core.data.model.FlowType
 import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
+import com.sumsub.sns.core.data.model.SNSInitConfig
 import com.sumsub.sns.core.data.model.SNSSDKState
 import com.sumsub.sns.prooface.SNSProoface
 import kotlinx.coroutines.launch
@@ -223,6 +224,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                     .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
                     .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
                     .withEventHandler(getOnEventHandler())
+                    .withConf(SNSInitConfig(email = "user@email.com", phone = "+11231234567"))
                     .build()
 
             snsSdk.launch()
