@@ -29,6 +29,7 @@ import com.sumsub.sns.core.data.model.SNSCompletionResult
 import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSInitConfig
 import com.sumsub.sns.core.data.model.SNSSDKState
+import com.sumsub.sns.core.data.model.SNSSupportItem
 import com.sumsub.sns.prooface.SNSProoface
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -72,7 +73,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 newResponse.token
             } catch (e: Exception) {
                 Timber.e(e)
-                Toast.makeText(context, "An error while refreshing an access token. Please, check your internet connection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "An error while refreshing an access token. Please, check your internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
                 ""
             }
 
@@ -93,7 +98,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 newResponse.token
             } catch (e: Exception) {
                 Timber.e(e)
-                Toast.makeText(context, "An error while refreshing an access token. Please, check your internet connection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "An error while refreshing an access token. Please, check your internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
                 ""
             }
 
@@ -204,7 +213,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val accessToken = try {
                 apiManager.getAccessTokenForLevel(token, userId, levelName).token
             } catch (e: Exception) {
-                Toast.makeText(context, "An error while getting an access token. Please, check your applicant", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "An error while getting an access token. Please, check your applicant",
+                    Toast.LENGTH_SHORT
+                ).show()
                 showProgress(false)
                 return@launch
             }
@@ -215,17 +228,27 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val modules = listOf(SNSProoface())
 
+            val supportItem = SNSSupportItem(
+                R.string.sns_support_title,
+                R.string.sns_support_subtitle,
+                SNSSupportItem.Type.Email,
+                "support@company.com",
+                null,
+                SNSIconHandler.SNSCommonIcons.MAIL.imageName
+            )
+
             val snsSdk = SNSMobileSDK.Builder(requireActivity())
-                    .withBaseUrl(apiUrl)
-                    .withAccessToken(accessToken, onTokenExpiration = sdkFlowAccessTokenExpirationHandler)
-                    .withDebug(true)
-                    .withModules(modules)
-                    .withStateChangedHandler(getOnStateChangeListener())
-                    .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
-                    .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
-                    .withEventHandler(getOnEventHandler())
-                    .withConf(SNSInitConfig(email = "user@email.com", phone = "+11231234567"))
-                    .build()
+                .withBaseUrl(apiUrl)
+                .withAccessToken(accessToken, onTokenExpiration = sdkFlowAccessTokenExpirationHandler)
+                .withDebug(true)
+                .withModules(modules)
+                .withStateChangedHandler(getOnStateChangeListener())
+                .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
+                .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
+                .withEventHandler(getOnEventHandler())
+                .withSupportItems(listOf(supportItem))
+                .withConf(SNSInitConfig(email = "user@email.com", phone = "+11231234567"))
+                .build()
 
             snsSdk.launch()
             showProgress(false)
@@ -256,7 +279,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val accessToken = try {
                 apiManager.getAccessTokenForAction(token, userId, levelName, actionId).token
             } catch (e: Exception) {
-                Toast.makeText(context, "An error while getting an access token. Please, check your applicant", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "An error while getting an access token. Please, check your applicant",
+                    Toast.LENGTH_SHORT
+                ).show()
                 showProgress(false)
                 return@launch
             }
@@ -268,16 +295,16 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val modules = listOf(SNSProoface())
 
             val snsSdk = SNSMobileSDK.Builder(requireActivity())
-                    .withBaseUrl(apiUrl)
-                    .withAccessToken(accessToken, onTokenExpiration = sdkActionAccessTokenExpirationHandler)
-                    .withDebug(true)
-                    .withModules(modules)
-                    .withStateChangedHandler(getOnStateChangeListener())
-                    .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
-                    .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
-                    .withEventHandler(getOnEventHandler())
-                    .withActionResultHandler(getOnActionResult())
-                    .build()
+                .withBaseUrl(apiUrl)
+                .withAccessToken(accessToken, onTokenExpiration = sdkActionAccessTokenExpirationHandler)
+                .withDebug(true)
+                .withModules(modules)
+                .withStateChangedHandler(getOnStateChangeListener())
+                .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
+                .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
+                .withEventHandler(getOnEventHandler())
+                .withActionResultHandler(getOnActionResult())
+                .build()
 
             snsSdk.launch()
             showProgress(false)
@@ -292,7 +319,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 is SNSSDKState.Ready -> Timber.d("SDK is ready")
                 is SNSSDKState.Failed -> {
                     when (currentState) {
-                        is SNSSDKState.Failed.Unauthorized -> Timber.e(currentState.exception, "Invalid token or a token can't be refreshed by the SDK. Please, check your token expiration handler")
+                        is SNSSDKState.Failed.Unauthorized -> Timber.e(
+                            currentState.exception,
+                            "Invalid token or a token can't be refreshed by the SDK. Please, check your token expiration handler"
+                        )
                         is SNSSDKState.Failed.Unknown -> Timber.e(currentState.exception, "Unknown error")
                     }
                 }
@@ -333,7 +363,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun getOnActionResult(): SNSActionResultHandler = object : SNSActionResultHandler {
-        override fun onActionResult(actionId: String, actionType: String, answer: String?, allowContinuing: Boolean): SNSActionResult {
+        override fun onActionResult(
+            actionId: String,
+            actionType: String,
+            answer: String?,
+            allowContinuing: Boolean
+        ): SNSActionResult {
             Timber.d("Action Result: actionId: $actionId answer: $answer")
             // use default scenario
             return SNSActionResult.Continue
@@ -379,17 +414,21 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             showProgress(true)
             try {
                 val levels = apiManager.getLevels(token).list.items
-                        .filter { it.id != null && it.name != null }
-                        .map { item ->
-                            val isAction = item.msdkFlowId?.let {
-                                apiManager.getFlow(token, it)?.type == FlowType.Actions
-                            } ?: false
-                            Level(item.id!!, item.name!!, isAction)
-                        }
+                    .filter { it.id != null && it.name != null }
+                    .map { item ->
+                        val isAction = item.msdkFlowId?.let {
+                            apiManager.getFlow(token, it)?.type == FlowType.Actions
+                        } ?: false
+                        Level(item.id!!, item.name!!, isAction)
+                    }
                 onLevelList(levels)
             } catch (e: Exception) {
                 Timber.e(e)
-                Toast.makeText(context, "An error while getting flow list. Please, check your internet connection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "An error while getting flow list. Please, check your internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             showProgress(false)
         }
@@ -399,12 +438,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         getLevels { levels ->
             val items = levels.filter(filter).mapNotNull { it.name }.toTypedArray()
             MaterialAlertDialogBuilder(requireContext())
-                    .setItems(items) { dialog, which ->
-                        dialog.dismiss()
-                        onSelected(items[which])
-                    }
-                    .create()
-                    .show()
+                .setItems(items) { dialog, which ->
+                    dialog.dismiss()
+                    onSelected(items[which])
+                }
+                .create()
+                .show()
         }
     }
 
