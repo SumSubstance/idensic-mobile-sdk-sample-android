@@ -14,4 +14,7 @@ interface ApiService {
     @GET("resources/sdkIntegrations/flows/{flowid}")
     suspend fun getFlow(@Header("Authorization") authorization: String, @Path("flowid") flowid: String) : FlowItem?
 
+    @GET("/resources/sdkIntegrations/flows")
+    suspend fun getFlows(@Header("Authorization") authorization: String): FlowListResponse
+
 }
