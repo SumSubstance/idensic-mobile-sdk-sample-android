@@ -41,8 +41,6 @@ class ApiManager(private val apiUrl: String) {
     suspend fun getAccessTokenForAction(token: String?, userId: String, levelName: String?, actionId: String?): AccessTokenResponse =
         service.getAccessToken(authorization = "Bearer $token", levelName = levelName, userId = userId, externalActionId = actionId)
 
-    suspend fun getFlow(authorizationToken: String, flowId: String) = service.getFlow(authorization = "Bearer $authorizationToken", flowid = flowId)
-
     suspend fun getFlows(authorizationToken: String) = service.getFlows(authorization = "Bearer $authorizationToken")
 
     suspend fun getLevels(authorizationToken: String) = service.getLevels(authorization = "Bearer $authorizationToken")

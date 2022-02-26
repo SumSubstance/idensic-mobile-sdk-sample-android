@@ -62,8 +62,7 @@
                     android:id="@+id/et_userid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/black" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -80,8 +79,7 @@
                     android:id="@+id/et_access_token"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/black" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -102,16 +100,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@string/default_level"
-                    android:textColor="@color/black" />
+                    android:text="@string/default_level" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/ib_get_levels"
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
-                android:src="@drawable/ic_list"
                 android:contentDescription="@null"
+                android:src="@drawable/ic_list"
                 app:layout_constraintBottom_toBottomOf="@id/tl_level_name"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintTop_toTopOf="@id/tl_level_name" />
@@ -150,8 +147,7 @@
                     android:id="@+id/et_actionid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/black" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -168,8 +164,7 @@
                     android:id="@+id/et_access_token_action"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/black" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -188,16 +183,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@string/default_action"
-                    android:textColor="@color/black" />
+                    android:text="@string/default_action" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/ib_get_actions"
                 android:layout_width="@dimen/button_minsize"
                 android:layout_height="@dimen/button_minsize"
-                android:src="@drawable/ic_list"
                 android:contentDescription="@null"
+                android:src="@drawable/ic_list"
                 app:layout_constraintBottom_toBottomOf="@id/tl_action_name"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintTop_toTopOf="@id/tl_action_name" />
