@@ -44,7 +44,7 @@
                 app:cameraPreview="glSurface"
                 app:cameraRequestPermissions="true"
                 app:cameraUseDeviceOrientation="false"
-                app:cameraWhiteBalance="daylight"
+                app:cameraWhiteBalance="auto"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
