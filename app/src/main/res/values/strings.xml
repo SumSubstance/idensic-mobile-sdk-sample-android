@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Idensic Demo</string>
+    <string name="app_name">SumSub Demo Kotlin</string>
     <string name="start_level">Start Level</string>
     <string name="start_action">Start Action</string>
     <string name="generate_new_userid">Generate New External User ID</string>
