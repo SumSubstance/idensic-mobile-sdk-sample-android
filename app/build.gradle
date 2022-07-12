@@ -9,8 +9,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 11906
-        versionName "1.19.6"
+        versionCode 11907
+        versionName "1.19.7"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -50,8 +50,8 @@ repositories {
 }
 
 dependencies {
-    def nav_version = "2.4.2"
-    def sdk_version = "1.19.6"
+    def nav_version = "2.5.0"
+    def sdk_version = "1.19.7"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.20"
     implementation 'androidx.appcompat:appcompat:1.4.2'
