@@ -13,6 +13,8 @@ android {
         versionName "1.19.7"
         multiDexEnabled true
 
+        buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

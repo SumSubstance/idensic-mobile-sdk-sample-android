@@ -26,6 +26,14 @@ class PrefManager(private val context: Context) {
     fun setAccessTokenAction(token: String?) = preferences.edit(commit = true) { putString(KEY_ACCESS_TOKEN_ACTION, token) }
     fun getAccessTokenAction() = preferences.getString(KEY_ACCESS_TOKEN_ACTION, null)
 
+    fun setSandbox(sandbox: Boolean) = preferences.edit(commit = true) { putBoolean(KEY_SANDBOX, sandbox) }
+
+    fun isSandbox() = preferences.getBoolean(KEY_SANDBOX, false)
+
+    fun setClientId(clientId: String?) = preferences.edit(commit = true) { putString(KEY_CLIENT_ID, clientId) }
+
+    fun getClientId() = preferences.getString(KEY_CLIENT_ID, null)
+
     companion object {
         private const val KEY_URL = "url"
         private const val KEY_TOKEN = "token"
@@ -33,5 +41,7 @@ class PrefManager(private val context: Context) {
         private const val KEY_ACCESS_TOKEN_ACTION = "access_token_action"
         private const val KEY_USER_ID = "user_id"
         private const val KEY_ACTION_ID = "action_id"
+        private const val KEY_SANDBOX = "sandbox"
+        private const val KEY_CLIENT_ID = "clientid"
     }
 }

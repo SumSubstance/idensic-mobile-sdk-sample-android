@@ -128,7 +128,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             return
         }
 
-        apiManager = ApiManager(apiUrl)
+        apiManager = ApiManager(
+            apiUrl = apiUrl,
+            isSandBox = { prefManager.isSandbox() },
+            clientId = { prefManager.getClientId() }
+        )
 
         toolbar = view.findViewById(R.id.toolbar)
         gContent = view.findViewById(R.id.g_content)

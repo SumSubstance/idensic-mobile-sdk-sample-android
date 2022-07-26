@@ -6,5 +6,15 @@ data class LoginData(
     @SerializedName("url")
     val url: String?,
     @SerializedName("t")
-    val t: String?
-)
+    val t: String?,
+    @SerializedName("email")
+    val email: String?,
+    @SerializedName("sandbox")
+    val legacySandBox: Boolean?,
+    @SerializedName("sbx")
+    val sbx: Int?,
+    @SerializedName("c")
+    val clientId: String?,
+) {
+    val isSandBox: Boolean get() = sbx == 1 || legacySandBox == true
+}

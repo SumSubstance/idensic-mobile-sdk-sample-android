@@ -13,6 +13,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import com.otaliastudios.cameraview.CameraView
+import com.sumsub.idensic.App
 import com.sumsub.idensic.R
 import com.sumsub.idensic.screen.base.BaseFragment
 
@@ -59,6 +60,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                     val loginData = Gson().fromJson(String(Base64.decode(barcode.rawValue, Base64.NO_WRAP)), LoginData::class.java)
                     prefManager.setUrl(loginData.url)
                     prefManager.setToken(loginData.t)
+                    prefManager.setSandbox(loginData.isSandBox)
+                    prefManager.setClientId(loginData.clientId)
                     findNavController().navigate(R.id.action_sign_in_to_main)
                 } catch (e: Exception) {
                 }
