@@ -99,8 +99,7 @@
                     android:id="@+id/et_level_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="@string/default_level" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
@@ -182,8 +181,7 @@
                     android:id="@+id/et_action_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="@string/default_action" />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
