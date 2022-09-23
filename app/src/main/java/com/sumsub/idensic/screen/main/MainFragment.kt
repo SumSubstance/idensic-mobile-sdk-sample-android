@@ -389,6 +389,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 is SNSEvent.SNSEventStepCompleted -> {
                     Timber.d("onEvent: step completed")
                 }
+                else -> {
+                    Timber.d("onEvent: event=$event")
+                }
             }
         }
 
