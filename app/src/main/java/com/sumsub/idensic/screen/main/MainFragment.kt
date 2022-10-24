@@ -421,11 +421,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         lifecycleScope.launch {
             showProgress(true)
             try {
-                val flows = apiManager.getFlows(token).list.items
                 val levels = apiManager.getLevels(token).list.items
                     .filter { it.id != null && it.name != null }
                     .map { item ->
-                        val isAction = flows.find { item.msdkFlowId == it.id }?.type == FlowType.Actions
+                        val isAction = item.type == FlowType.Actions.value
                         Level(item.id!!, item.name!!, isAction)
                     }
                 onLevelList(levels)

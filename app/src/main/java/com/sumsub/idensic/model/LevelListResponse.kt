@@ -25,7 +25,9 @@ data class LevelItem(
     @SerializedName("modifiedAt")
     val modifiedAt: String?,
     @SerializedName("msdkFlowId")
-    val msdkFlowId: String?
+    val msdkFlowId: String?,
+    @SerializedName("type")
+    val type: String?
 )
 
 data class Level(val id: String, val name: String?, val isAction: Boolean)
