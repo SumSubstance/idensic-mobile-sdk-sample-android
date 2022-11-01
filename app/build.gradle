@@ -9,8 +9,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 12001
-        versionName "1.20.1"
+        versionCode 12002
+        versionName "1.20.2"
         multiDexEnabled true
 
         buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
@@ -52,8 +52,8 @@ repositories {
 }
 
 dependencies {
-    def nav_version = "2.5.2"
-    def sdk_version = "1.20.1"
+    def nav_version = "2.5.3"
+    def sdk_version = "1.20.2"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
     implementation 'androidx.appcompat:appcompat:1.5.1'
