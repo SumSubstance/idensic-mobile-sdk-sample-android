@@ -233,8 +233,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             val modules = listOf(SNSProoface())
 
             val supportItem = SNSSupportItem(
-                R.string.sns_support_title,
-                R.string.sns_support_subtitle,
+                "Support",
+                "You can contact us in one of the following ways:",
                 SNSSupportItem.Type.Email,
                 "support@company.com",
                 null,
