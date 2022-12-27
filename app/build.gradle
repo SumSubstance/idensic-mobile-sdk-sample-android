@@ -45,17 +45,11 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-    maven { url "https://maven.sumsub.com/repository/maven-public/" }
-}
-
 dependencies {
     def nav_version = "2.5.3"
     def sdk_version = "1.22.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20"
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
