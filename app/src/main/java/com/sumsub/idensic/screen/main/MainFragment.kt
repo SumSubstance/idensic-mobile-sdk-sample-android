@@ -234,7 +234,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val supportItem = SNSSupportItem(
                 "Support",
-                "You can contact us in one of the following ways:",
+                "You can contact us by email support@company.com",
                 SNSSupportItem.Type.Email,
                 "support@company.com",
                 null,
