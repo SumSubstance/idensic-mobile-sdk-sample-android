@@ -9,8 +9,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 12300
-        versionName "1.23.0"
+        versionCode 12400
+        versionName "1.24.0"
         multiDexEnabled true
 
         buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
@@ -47,18 +47,21 @@ android {
 
 dependencies {
     def nav_version = "2.5.3"
-    def sdk_version = "1.23.0"
+    def sdk_version = "1.24.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20"
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.mlkit:barcode-scanning:17.0.3'
+    implementation 'com.google.mlkit:barcode-scanning:17.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.otaliastudios:cameraview:2.7.2'
 
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
