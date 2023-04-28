@@ -30,6 +30,8 @@ import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSInitConfig
 import com.sumsub.sns.core.data.model.SNSSDKState
 import com.sumsub.sns.core.data.model.SNSSupportItem
+import com.sumsub.sns.core.widget.SNSToolbarView
+import com.sumsub.sns.core.widget.autocompletePhone.bottomsheet.SNSPickerDialog
 import com.sumsub.sns.prooface.SNSProoface
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -442,17 +444,25 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun showLevelListDialog(filter: (Level) -> Boolean, onSelected: (CharSequence) -> Unit) {
         getLevels { levels ->
-            val items = levels.filter(filter).mapNotNull { it.name }.toTypedArray()
-            MaterialAlertDialogBuilder(requireContext())
-                .setItems(items) { dialog, which ->
-                    dialog.dismiss()
-                    onSelected(items[which])
+            val items = levels.filter(filter)
+                .mapNotNull { level ->
+                    level.name?.let { SNSPickerDialog.Item(level.id, it) }
                 }
-                .create()
-                .show()
+                .toTypedArray()
+
+            val dialog = SNSPickerDialog.newInstance(
+                items = items,
+                itemLayoutId = R.layout.sns_picker_list_item
+            ).apply {
+                pickerCallBack = object : SNSPickerDialog.PickerCallBack {
+                    override fun onItemSelected(item: SNSPickerDialog.Item) {
+                        levels.find { it.id == item.id }?.let { it.name }?.let { onSelected(it) }
+                    }
+                }
+            }
+            dialog.show(parentFragmentManager, SNSPickerDialog.TAG)
         }
     }
 
     override fun getSoftInputMode(): Int = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 }
-
