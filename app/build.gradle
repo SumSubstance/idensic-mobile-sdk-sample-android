@@ -4,6 +4,11 @@ apply plugin: 'com.google.firebase.appdistribution'
 
 android {
     compileSdkVersion 33
+    namespace "com.sumsub.idensic"
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId "com.sumsub.idensic"
@@ -19,6 +24,14 @@ android {
     }
 
     buildTypes {
+//        debug {
+//            signingConfig signingConfigs.debug
+//            minifyEnabled true
+//            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//
+//        }
+
         release {
             signingConfig signingConfigs.debug
             minifyEnabled true
@@ -69,5 +82,5 @@ dependencies {
 
     implementation "com.sumsub.sns:idensic-mobile-sdk:${sdk_version}"
     implementation "com.sumsub.sns:idensic-mobile-sdk-prooface:${sdk_version}"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
+//    implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
 }

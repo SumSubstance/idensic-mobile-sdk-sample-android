@@ -64,6 +64,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                     prefManager.setClientId(loginData.clientId)
                     findNavController().navigate(R.id.action_sign_in_to_main)
                 } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }

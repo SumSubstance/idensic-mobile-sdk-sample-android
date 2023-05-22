@@ -452,7 +452,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             val dialog = SNSPickerDialog.newInstance(
                 items = items,
-                itemLayoutId = R.layout.sns_picker_list_item
+                itemLayoutId = com.sumsub.sns.R.layout.sns_picker_list_item
             ).apply {
                 pickerCallBack = object : SNSPickerDialog.PickerCallBack {
                     override fun onItemSelected(item: SNSPickerDialog.Item) {
