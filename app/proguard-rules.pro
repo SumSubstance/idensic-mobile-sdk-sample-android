@@ -19,14 +19,17 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-#-dontwarn com.google.mlkit.vision.**
-#-dontwarn org.commonmark.ext.gfm.strikethrough.**
-#-dontwarn org.conscrypt.**
-#-dontwarn org.openjsse.javax.**
-#-dontwarn org.openjsse.net.**
-#-dontwarn com.sumsub.sns.videoident.**
+
+# following rules can be removed after updating to 1.25
+-dontwarn com.google.mlkit.vision.**
+-dontwarn org.commonmark.ext.gfm.strikethrough.**
+-dontwarn org.conscrypt.**
+-dontwarn org.openjsse.javax.**
+-dontwarn org.openjsse.net.**
+-dontwarn com.sumsub.sns.videoident.**
 
 
 # Prevent R8 from leaving Data object members always null
 -keep class com.sumsub.idensic.model.** { *; }
+-keep class com.sumsub.idensic.screen.signin.** { *; }
 
