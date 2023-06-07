@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Prevent R8 from leaving Data object members always null
+-keep class com.sumsub.idensic.model.** { *; }
+-keep class com.sumsub.idensic.screen.signin.** { *; }

@@ -4,6 +4,11 @@ apply plugin: 'com.google.firebase.appdistribution'
 
 android {
     compileSdkVersion 33
+    namespace "com.sumsub.idensic"
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId "com.sumsub.idensic"
@@ -69,5 +74,5 @@ dependencies {
 
     implementation "com.sumsub.sns:idensic-mobile-sdk:${sdk_version}"
     implementation "com.sumsub.sns:idensic-mobile-sdk-prooface:${sdk_version}"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
+//    implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
 }
