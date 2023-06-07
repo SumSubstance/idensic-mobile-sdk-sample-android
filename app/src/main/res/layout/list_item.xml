@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/sns_margin_medium"
+    android:paddingEnd="@dimen/sns_margin_medium">
+
+    <com.sumsub.sns.core.widget.SNSSubtitle2TextView
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/sns_margin_medium" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
