@@ -17,5 +17,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name='Idensic Demo'
+rootProject.name='Idensic Demo Kotlin'
 include ':app'
