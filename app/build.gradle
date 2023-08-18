@@ -14,8 +14,8 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 12600
-        versionName "1.26.0"
+        versionCode 12700
+        versionName "1.27.0"
         multiDexEnabled true
 
         buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
@@ -51,14 +51,14 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.6.0"
-    def sdk_version = "1.26.0"
+    def nav_version = "2.7.0"
+    def sdk_version = "1.27.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20"
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.mlkit:barcode-scanning:17.1.0'
+    implementation 'com.google.mlkit:barcode-scanning:17.2.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
     implementation 'com.otaliastudios:cameraview:2.7.2'
 
