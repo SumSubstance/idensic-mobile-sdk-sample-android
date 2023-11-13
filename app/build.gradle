@@ -74,5 +74,5 @@ dependencies {
 
     implementation "com.sumsub.sns:idensic-mobile-sdk:${sdk_version}"
     implementation "com.sumsub.sns:idensic-mobile-sdk-prooface:${sdk_version}"
-//    implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
+    implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
 }
