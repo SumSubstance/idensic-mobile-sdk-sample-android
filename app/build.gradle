@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.firebase.appdistribution'
 
 android {
-    compileSdkVersion 34
     namespace "com.sumsub.idensic"
 
     buildFeatures {
@@ -14,8 +13,9 @@ android {
         applicationId "com.sumsub.idensic"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 12800
-        versionName "1.28.0"
+        compileSdkVersion 34
+        versionCode 12900
+        versionName "1.29.0"
         multiDexEnabled true
 
         buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
@@ -51,8 +51,8 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.7.5"
-    def sdk_version = "1.28.0"
+    def nav_version = "2.7.6"
+    def sdk_version = "1.29.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20"
     implementation 'androidx.appcompat:appcompat:1.6.1'
