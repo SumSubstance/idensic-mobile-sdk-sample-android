@@ -52,7 +52,7 @@ android {
 
 dependencies {
     def nav_version = "2.7.6"
-    def sdk_version = "1.30.0"
+    def sdk_version = "1.31.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20"
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -73,6 +73,5 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     implementation "com.sumsub.sns:idensic-mobile-sdk:${sdk_version}"
-    implementation "com.sumsub.sns:idensic-mobile-sdk-prooface:${sdk_version}"
     implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
 }
