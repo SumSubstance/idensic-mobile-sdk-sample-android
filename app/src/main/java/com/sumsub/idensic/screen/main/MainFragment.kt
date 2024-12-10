@@ -13,7 +13,6 @@ import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.sumsub.idensic.R
@@ -23,6 +22,7 @@ import com.sumsub.idensic.model.Level
 import com.sumsub.idensic.screen.base.BaseFragment
 import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
+import com.sumsub.sns.core.SNSProoface
 import com.sumsub.sns.core.data.listener.*
 import com.sumsub.sns.core.data.model.FlowType
 import com.sumsub.sns.core.data.model.SNSCompletionResult
@@ -30,9 +30,7 @@ import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSInitConfig
 import com.sumsub.sns.core.data.model.SNSSDKState
 import com.sumsub.sns.core.data.model.SNSSupportItem
-import com.sumsub.sns.core.widget.SNSToolbarView
 import com.sumsub.sns.core.widget.autocompletePhone.bottomsheet.SNSPickerDialog
-import com.sumsub.sns.prooface.SNSProoface
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
