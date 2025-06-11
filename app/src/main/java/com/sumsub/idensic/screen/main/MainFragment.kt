@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.sumsub.idensic.R
 import com.sumsub.idensic.common.Constants
+import com.sumsub.idensic.common.PickerDialog
 import com.sumsub.idensic.manager.ApiManager
 import com.sumsub.idensic.model.Level
 import com.sumsub.idensic.screen.base.BaseFragment
@@ -30,7 +31,6 @@ import com.sumsub.sns.core.data.model.SNSException
 import com.sumsub.sns.core.data.model.SNSInitConfig
 import com.sumsub.sns.core.data.model.SNSSDKState
 import com.sumsub.sns.core.data.model.SNSSupportItem
-import com.sumsub.sns.core.widget.autocompletePhone.bottomsheet.SNSPickerDialog
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -444,21 +444,21 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         getLevels { levels ->
             val items = levels.filter(filter)
                 .mapNotNull { level ->
-                    level.name?.let { SNSPickerDialog.Item(level.id, it) }
+                    level.name?.let { PickerDialog.Item(level.id, it) }
                 }
                 .toTypedArray()
 
-            val dialog = SNSPickerDialog.newInstance(
+            val dialog = PickerDialog.newInstance(
                 items = items,
                 itemLayoutId = R.layout.list_item
             ).apply {
-                pickerCallBack = object : SNSPickerDialog.PickerCallBack {
-                    override fun onItemSelected(item: SNSPickerDialog.Item) {
+                pickerCallBack = object : PickerDialog.PickerCallBack {
+                    override fun onItemSelected(item: PickerDialog.Item) {
                         levels.find { it.id == item.id }?.let { it.name }?.let { onSelected(it) }
                     }
                 }
             }
-            dialog.show(parentFragmentManager, SNSPickerDialog.TAG)
+            dialog.show(parentFragmentManager, PickerDialog.TAG)
         }
     }
 
