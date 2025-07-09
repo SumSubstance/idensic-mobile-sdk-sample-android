@@ -15,8 +15,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 35
         compileSdkVersion 35
-        versionCode 13600
-        versionName "1.36.0"
+        versionCode 13610
+        versionName "1.36.1"
         multiDexEnabled true
 
         buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
@@ -53,7 +53,7 @@ android {
 
 dependencies {
     def nav_version = "2.7.6"
-    def sdk_version = "1.36.0"
+    def sdk_version = "1.36.1"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20"
     implementation 'androidx.appcompat:appcompat:1.6.1'
