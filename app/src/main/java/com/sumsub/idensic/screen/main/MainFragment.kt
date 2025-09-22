@@ -21,7 +21,6 @@ import com.sumsub.idensic.common.PickerDialog
 import com.sumsub.idensic.manager.ApiManager
 import com.sumsub.idensic.model.Level
 import com.sumsub.idensic.screen.base.BaseFragment
-import com.sumsub.sns.core.SNSActionResult
 import com.sumsub.sns.core.SNSMobileSDK
 import com.sumsub.sns.core.SNSProoface
 import com.sumsub.sns.core.data.listener.*
@@ -307,7 +306,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 .withCompleteHandler(getOnSDKCompletedHandler(requireContext().applicationContext))
                 .withErrorHandler(getOnSDKErrorHandler(requireContext().applicationContext))
                 .withEventHandler(getOnEventHandler())
-                .withActionResultHandler(getOnActionResult())
                 .build()
 
             snsSdk.launch()
@@ -337,7 +335,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 is SNSSDKState.FinallyRejected -> Timber.d("Applicant has been finally rejected")
                 is SNSSDKState.TemporarilyDeclined -> Timber.d("Applicant has been declined temporarily")
                 is SNSSDKState.Approved -> Timber.d("Applicant has been approved")
-                is SNSSDKState.ActionCompleted -> Timber.d("Action is completed")
             }
         }
     }
@@ -364,19 +361,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 is SNSException.Network -> Timber.d(exception, "Network exception.")
                 is SNSException.Unknown -> Timber.d(exception, "Unknown exception.")
             }
-        }
-    }
-
-    private fun getOnActionResult(): SNSActionResultHandler = object : SNSActionResultHandler {
-        override fun onActionResult(
-            actionId: String,
-            actionType: String,
-            answer: String?,
-            allowContinuing: Boolean
-        ): SNSActionResult {
-            Timber.d("Action Result: actionId: $actionId answer: $answer")
-            // use default scenario
-            return SNSActionResult.Continue
         }
     }
 
