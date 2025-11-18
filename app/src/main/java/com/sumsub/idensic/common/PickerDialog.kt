@@ -84,7 +84,7 @@ internal class PickerDialog : BottomSheetDialogFragment() {
                 setupFullHeight(bottomSheetDialog)
             } else {
                 val bottomSheet = bottomSheetDialog.findViewById<View>(
-                    R.id.design_bottom_sheet
+                    com.google.android.material.R.id.design_bottom_sheet
                 ) as FrameLayout
                 val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
                 behavior.isFitToContents = true
@@ -106,7 +106,7 @@ internal class PickerDialog : BottomSheetDialogFragment() {
     private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
         val bottomSheet =
             bottomSheetDialog.findViewById<View>(
-                R.id.design_bottom_sheet
+                com.google.android.material.R.id.design_bottom_sheet
             ) as FrameLayout
         val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
         val layoutParams = bottomSheet.layoutParams
