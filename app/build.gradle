@@ -15,8 +15,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 35
         compileSdkVersion 35
-        versionCode 14010
-        versionName "1.40.1"
+        versionCode 14020
+        versionName "1.40.2"
         multiDexEnabled true
 
         buildConfigField("String", "DEMO_VERSION", "\"${versionName}\"")
