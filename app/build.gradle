@@ -80,6 +80,7 @@ dependencies {
     implementation "com.sumsub.sns:idensic-mobile-sdk:${sdk_version}"
     implementation "com.sumsub.sns:idensic-mobile-sdk-videoident:${sdk_version}"
     implementation "com.sumsub.sns:idensic-mobile-sdk-nfc:${sdk_version}"
+    implementation "com.sumsub.sns:idensic-mobile-sdk-fisherman:${sdk_version}"
 
 //    The eID is an optional module that is required only if you are going to use the eID during
 //    the verification flow. To access it, you first need to add the private repository to your
