@@ -5,8 +5,8 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @POST("resources/accessTokens")
-    suspend fun getAccessToken(@Header("Authorization") authorization: String, @Query("levelName") levelName: String?, @Query("userId") userId: String, @Query("externalActionId") externalActionId: String? = null, @Query("ttlInSecs") ttlInSecs: Int = 999999): AccessTokenResponse
+    @POST("/resources/dashboard/accessTokens/sdk")
+    suspend fun getAccessToken(@Header("Authorization") authorization: String, @Body request: AccessTokenRequest): AccessTokenResponse
 
     @GET("resources/applicants/-/levels")
     suspend fun getLevels(@Header("Authorization") authorization: String): LevelListResponse
