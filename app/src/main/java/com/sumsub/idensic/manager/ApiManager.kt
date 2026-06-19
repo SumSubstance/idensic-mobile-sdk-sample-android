@@ -2,6 +2,7 @@ package com.sumsub.idensic.manager
 
 import com.google.gson.Gson
 import com.sumsub.idensic.BuildConfig
+import com.sumsub.idensic.model.AccessTokenRequest
 import com.sumsub.idensic.model.AccessTokenResponse
 import com.sumsub.idensic.network.ApiService
 import okhttp3.OkHttpClient
@@ -37,7 +38,13 @@ class ApiManager(private val apiUrl: String, isSandBox: () -> Boolean, clientId:
     }
 
     suspend fun getAccessTokenForLevel(token: String?, userId: String, levelName: String?): AccessTokenResponse =
-        service.getAccessToken(authorization = "Bearer $token", levelName = levelName, userId = userId)
+        service.getAccessToken(
+            authorization = "Bearer $token",
+            request = AccessTokenRequest(
+                levelName = levelName,
+                userId = userId,
+            )
+        )
 
     suspend fun getAccessTokenForAction(
         token: String?,
@@ -47,9 +54,11 @@ class ApiManager(private val apiUrl: String, isSandBox: () -> Boolean, clientId:
     ): AccessTokenResponse =
         service.getAccessToken(
             authorization = "Bearer $token",
-            levelName = levelName,
-            userId = userId,
-            externalActionId = actionId
+            request = AccessTokenRequest(
+                levelName = levelName,
+                userId = userId,
+                externalActionId = actionId
+            )
         )
 
     suspend fun getFlows(authorizationToken: String) = service.getFlows(authorization = "Bearer $authorizationToken")
